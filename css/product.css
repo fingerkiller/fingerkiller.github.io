@@ -1,0 +1,134 @@
+@CHARSET "UTF-8";
+
+body {
+    font-size: 12px;
+    font-family: "微软雅黑"， "宋体";
+    color: rgb(67, 67, 67);
+}
+
+.container {
+	width: 100%;
+	height: auto;
+	background: url("../img/container_bg.jpg") repeat scroll 0% 0% transparent;
+	float: left;
+}
+
+#head {
+	width: 1004px;
+    height: auto;
+    margin: 0px auto;
+    overflow: hidden;
+}
+
+.blank {
+	width: 100%;
+	height: 10px;
+}
+
+.menu_bar {
+	width: 100%;
+	height: 36px;
+	background-color: black;
+	background: url("../img/menu_bg_r.jpg") repeat-x scroll 0% 0% transparent;
+}
+
+#menu {
+	width: 980px;
+	height: 36px;
+	margin: 0px auto;
+}
+
+#menu ul {
+	width: 980px;
+	margin: 0px auto;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 36px;
+	list-style: none;
+}
+
+#menu ul li {
+	float: left;
+	width: 130px;
+	height: 36px;
+	background: url("img/li_bg.jpg") repeat scroll 0% 0% transparent;
+	text-align: center;
+	position: relative;
+	z-index: 1;
+}
+
+#xihuPro {
+	color: rgb(255, 255, 255);
+}
+
+#xihuProCont {
+	width: 1004px;
+   
+}
+
+#huliFace {
+	color: rgb(255, 255, 255);
+}
+
+#huliHand {
+	color: rgb(255, 255, 255);
+}
+
+#huliBody {
+	color: rgb(255, 255, 255);
+}
+
+#otherPro {
+	color: rgb(255, 255, 255);
+}
+
+.content {
+	width: 100%;
+	height: auto;
+	background: repeat scroll 0% 0% transparent;
+	float: left;
+}
+
+.main {
+    width: 1004px;
+    height: auto;
+    margin: 0px auto;
+    overflow: hidden;
+}
+
+。proTab {
+	
+}
+
+.hoshi {
+	font-family: "微软雅黑";
+	font-size: 28px;
+	color: rgb(255, 0, 0);
+}
+
+.proTitle {
+	font-family: "微软雅黑";
+	font-size: 14px;
+	color: rgb(100, 245, 100);
+}
+
+.price {
+	font-family: "微软雅黑";
+	font-size: 18px;
+	color: rgb(240, 145, 150);
+}
+
+.proContent {
+	font-family: "微软雅黑";
+	font-size: 12px;
+}
+
+.footer {
+	width: 100%;
+	height: 50px;
+	float: left;
+	background: url("../img/footer_bg.jpg") repeat-x scroll center top transparent;
+	line-height: 24px;
+	text-align: center;
+	padding-top: 20px;
+}
