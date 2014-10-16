@@ -1,0 +1,464 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>---
+layout: contentpage
+title: ios 数据库简单操作
+categories: [object-c_IOS]
+date: 2013-04-22</title>
+
+</head>
+<body>
+<hr />
+
+<p>layout: contentpage
+title: ios 数据库简单操作
+categories: [object-c_IOS]
+date: 2013-04-22 17:09:23
+sourceType: 1---</p>
+
+<p>说起数据库便想起4个字，增删改查。</p>
+
+
+
+
+<p>今天学习的下FMDB 数据库管理框架。</p>
+
+
+
+
+<p>个人认为他的中心思想很简单，只需要关心sql语句，所以核心方法只有一种，执行sql语句。<br>
+
+</p>
+
+
+
+
+<p>两个主要类FMDatabase，FMResultSet。</p>
+
+
+
+
+<p>两种主要方法，executeUpdate，executeQuery。<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>&nbsp;执行sql语句分为2种，一种是需要返回&#20540;，一种是不需要返回&#20540;。</p>
+
+
+
+
+<p>其中无返回&#20540;的包括&nbsp; 增，删，改，（executeUpdate）有返回&#20540;的是 查（executeQuery）。这些都是FMDatabase的方法，查询的时候要返回数据有时是多条，所以分装了另一个类FMResultSet。<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>FMDB 用起来很简单&nbsp; 下边测试方法，一看便知。<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>-(void)test<br>
+
+{<br>
+
+&nbsp;&nbsp;&nbsp; NSString * bundlepath = [[NSBundle mainBundle] pathForResource:@&quot;Test&quot; ofType:@&quot;sqlite&quot;];<br>
+
+&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; NSString * documentStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];<br>
+
+&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; NSString *realPath = [documentStr stringByAppendingPathComponent:@&quot;Test.sqlite&quot;];<br>
+
+&nbsp;&nbsp;&nbsp; NSLog(@&quot;%@&quot;,documentStr);<br>
+
+&nbsp;&nbsp;&nbsp; if (![[NSFileManager defaultManager] fileExistsAtPath:realPath]) {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[NSFileManager defaultManager] copyItemAtPath:bundlepath toPath:realPath error:nil];<br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; FMDatabase&nbsp;&nbsp; * database = [FMDatabase databaseWithPath:realPath];<br>
+
+&nbsp;&nbsp;&nbsp; if (![database open]) {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;can't open&quot;);<br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp;&nbsp; else<br>
+
+&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [database executeUpdate:@&quot;create table if not exists people(name TEXT,age INT)&quot;];<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [database executeUpdate:@&quot;insert into people (name,age) values(?,?)&quot;,@&quot;susan&quot;,@1];<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [database executeUpdate:@&quot;insert into people (name,age) values(?,?)&quot;,@&quot;lina&quot;,@2];<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSString * selectResult&nbsp; = [database stringForQuery:@&quot;select name from people where age = ?&quot;,@1];<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;%@&quot;,selectResult);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FMResultSet * resultSet = [database executeQuery:@&quot;select * from people&quot;];<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int j = 1;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ([resultSet next]) {//循环行<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;地%d条数据&quot;,j);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;%@---%d&quot;,[resultSet stringForColumn:@&quot;name&quot;],[resultSet intForColumn:@&quot;age&quot;]);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (int i = 0; i&lt;[resultSet columnCount]; i&#43;&#43;) {//循环列<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;%@&quot;,[resultSet stringForColumnIndex:i]);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j&#43;&#43;;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;<br>
+
+}</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>对比下系统的 会发现简单的多<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>-(void)test2<br>
+
+{<br>
+
+&nbsp;&nbsp;&nbsp; NSString * bundlepath = [[NSBundle mainBundle] pathForResource:@&quot;Test&quot; ofType:@&quot;sqlite&quot;];<br>
+
+&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; NSString * documentStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];<br>
+
+&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; NSString *realPath = [documentStr stringByAppendingPathComponent:@&quot;Test.sqlite&quot;];<br>
+
+&nbsp;&nbsp;&nbsp; NSLog(@&quot;%@&quot;,documentStr);<br>
+
+&nbsp;&nbsp;&nbsp; if (![[NSFileManager defaultManager] fileExistsAtPath:realPath]) {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[NSFileManager defaultManager] copyItemAtPath:bundlepath toPath:realPath error:nil];<br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; sqlite3 * db =NULL;<br>
+
+&nbsp;&nbsp;&nbsp; if (sqlite3_open([realPath UTF8String], &amp;db)!= SQLITE_OK)<br>
+
+&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;can't open&quot;);<br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp;&nbsp; else<br>
+
+&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sqlite3_stmt * stmt = NULL;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; char * sql = (char*)[@&quot;create table if not exists city(name TEXT,age INT)&quot; UTF8String];<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int result = 0;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result = sqlite3_prepare_v2(db, sql , -1, &amp;stmt, NULL);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result=sqlite3_step(stmt);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sqlite3_finalize(stmt);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stmt = NULL;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sql&nbsp; = &quot;insert into city (name,age) values(?,?)&quot;;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result&nbsp; = sqlite3_prepare_v2(db, sql , -1, &amp;stmt, NULL);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result =&nbsp; sqlite3_bind_text(stmt, 1, &quot;pk&quot;, -1, NULL);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result =&nbsp; sqlite3_bind_int(stmt, 2, 10);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result =sqlite3_step(stmt);<br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sqlite3_finalize(stmt);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sql = &quot;select * from city&quot;;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sqlite3_prepare_v2(db, sql, -1, &amp;stmt, NULL);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (sqlite3_step(stmt)==SQLITE_ROW)<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;%s&quot;,sqlite3_column_text(stmt, 0));<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;%d&quot;,sqlite3_column_int(stmt, 1));<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sqlite3_finalize(stmt);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; }<br>
+
+&nbsp;&nbsp; &nbsp;<br>
+
+<br>
+
+}<br>
+
+</p>
+
+
+<p><br></p>
+</body>
+</html>
