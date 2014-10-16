@@ -1,0 +1,492 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>
+<html lang="en">
+    <h1 class="entry-title"><a href="http://www.guomii.com/posts/30136</title>
+
+</head>
+<body>
+<p><html lang="en"></p>
+
+<pre><code>&lt;h1 class="entry-title"&gt;&lt;a href="http://www.guomii.com/posts/30136" title="OS X Mountain  Lion 系统配置 Apache&amp;#43;Mysql&amp;#43;PHP 详细教程"&gt;OS X Mountain Lion 系统配置 Apache&amp;#43;Mysql&amp;#43;PHP 详细教程&lt;/a&gt;&lt;/h1&gt;
+
+&lt;div class="title-meta"&gt;
+
+    &lt;div class="title-meta-left"&gt;Posted on 2012 年 08 月 06 日 by &lt;a href="http://www.guomii.com/posts/author/eyon" title="由 Eyon 发布" rel="author"&gt;
+
+        Eyon&lt;/a&gt; &lt;/div&gt;
+
+    &lt;div class="title-meta-right"&gt;&lt;a href="http://www.guomii.com/posts/30136#comments-title" title="comments"&gt;43 Comments&lt;/a&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;如果你是一名 Web 开发者，很多时候都需要在本地搭建服务器测试环境，比如 Apache&amp;#43;Mysql&amp;#43;PHP 这样的环境。事实上 Mac OS X 中想要搭建这样的环境很简单，本文我们就会将详细的教程分享给大家。&lt;/p&gt;
+
+&lt;p&gt;首先需要说明的是，Mac OS X 系统其实已经集成了 Apache&amp;#43;PHP环境，用户手动开启即可。在之前的 OS X 系统中，只需要进入「系统偏好设置——共享」，然后开启「Web 共享」就可以打开 Apache。不过在最新的 Mountain Lion 中苹果取消了这个共享功能的图形界面，只能从命令行开启。&lt;/p&gt;
+
+&lt;div id="attachment_30141" class="wp-caption aligncenter" style="width:610px"&gt;&lt;img src="http://img.guomii.com/2012/08/Snip20120806_3-600x353.png" alt="" title="Snip20120806_3" class="size-large wp-image-30141" height="353" width="600"&gt;
+
+    &lt;p class="wp-caption-text"&gt;Mountain Lion 中已经没有”Web共享”&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;h3&gt;启用 Apache/Web 共享&lt;/h3&gt;
+
+&lt;p&gt;打开终端，运行启动 Apache 命令：&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+    &lt;p&gt;sudo apachectl start&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;关闭命令：&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+    &lt;p&gt;sudo apachectl stop&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;重启命令：&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+    &lt;p&gt;sudo apachectl restart&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;查看 Apache 版本命令：&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+    &lt;p&gt;httpd -v&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;Mountain Lion 中集成的 Apache 版本如下：&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+    &lt;p&gt;mbp:~ eyon$ httpd -v&lt;br&gt;
+
+    Server version: Apache/2.2.22 (Unix)&lt;br&gt;
+
+    Server built: Jun 20 2012 13:57:09&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;启用 Apache 之后，你可以直接在浏览器中访问 http://localhost，如果出现”It works!”就表示运行正常。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://img.guomii.com/2012/08/Snip20120806_6.png" alt="" title="Snip20120806_6" class="aligncenter size-full wp-image-30144" height="295" width="600"&gt;&lt;/p&gt;
+
+    &lt;h3&gt;Root 目录&lt;/h3&gt;
+
+    &lt;p&gt;启用 Apache 之后，你首先得知道网页文件应该放到哪个目录才能正常运行，相信有过 Linux 服务器配置经验的对此不会陌生。OS X 中默认有两个目录可以直接运行你的 Web 程序，一个是系统级的 Web 根目录，一个是用户级的根目录，大家记下即可。&lt;/p&gt;
+
+    &lt;p&gt;系统级的根目录是：&lt;/p&gt;
+
+    &lt;blockquote&gt;
+
+        &lt;p&gt;/Library/WebServer/Documents/&lt;/p&gt;
+
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;它对应的网址是：&lt;/p&gt;
+
+    &lt;blockquote&gt;
+
+        &lt;p&gt;http://localhost&lt;/p&gt;
+
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;用户级的根目录是：&lt;/p&gt;
+
+    &lt;blockquote&gt;
+
+        &lt;p&gt;~/Sites&lt;/p&gt;
+
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;&lt;img src="http://img.guomii.com/2012/08/Snip20120806_4.png" alt="" title="Snip20120806_4" class="aligncenter size-full wp-image-30142" height="278" width="502"&gt;&lt;/p&gt;
+
+        &lt;p&gt;~/Sites 也就是你用户目录下面的”站点”目录，在 OS X Mountain Lion 中，这个目录可能没有，所以你需要手动建立一个同名目录。建立方式很简单，直接在终端中运行：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;sudo mkdir ~/Sites&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;建立”站点”文件夹之后，检查下面这个文件夹下面是不是有”你的用户名.conf”这个文件。&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;/etc/apache2/users/&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;如果没有，那么你需要创建一个，取名为”你的用户名.conf”，你可以使用 vi 或者 nano 这两种编辑器之一来创建。&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;sudo vi /etc/apache2/users/你的用户名.conf&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;创建之后将下面的这几行内容写到上面的 conf 文件中：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;&lt;code&gt;&amp;lt;Directory &amp;quot;/Users/username/Sites/&amp;quot;&amp;gt;&lt;br&gt;
+
+                Options Indexes MultiViews&lt;br&gt;
+
+                AllowOverride All&lt;br&gt;
+
+                Order allow,deny&lt;br&gt;
+
+                Allow from all&lt;br&gt;
+
+                &amp;lt;/Directory&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;文件保存之后，给它赋予相应的权限：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;sudo chmod 755 /etc/apache2/users/你的用户名.conf&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;接下来重启 Apache，以使该配置文件生效：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;sudo apachectl restart&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;之后你就可以通过浏览器访问你的用户级目录网页了，你可以随便防个网页进去测试一下。根目录地址为：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;http://localhost/~username/&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;(请将username改成你的用户名)&lt;/p&gt;
+
+        &lt;h3&gt;启用 PHP&lt;/h3&gt;
+
+        &lt;p&gt;Mountain Lion 中已经集成了 PHP 5.3.13 版本，也需要手动开启。你可以用 vi 或者 nano 编辑器打开下面这个文件：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;sudo nano /etc/apache2/httpd.conf&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;然后搜索”php”，第一条匹配的应该是下面这句代码：&lt;/p&gt;
+
+        &lt;p&gt;LoadModule php5_module libexec/apache2/libphp5.so&lt;/p&gt;
+
+        &lt;p&gt;请将这句代码前面的#去掉，然后保存文件。&lt;/p&gt;
+
+        &lt;p&gt;接下来再一次重启 Apache：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;sudo apachectl restart&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;现在 PHP 应该已经开始工作了，你可以在用户级根目录下(~/Sites/)放一个PHP测试文件，代码如下：&lt;/p&gt;
+
+        &lt;blockquote&gt;
+
+            &lt;p&gt;&amp;lt;?php phpinfo(); ?&amp;gt;&lt;/p&gt;
+
+        &lt;/blockquote&gt;
+
+        &lt;h3&gt;安装 MySQL&lt;/h3&gt;
+
+        &lt;p&gt;Mountain Lion 中并没有集成 Mysql，需要手动安装。你可以&lt;a href="http://dev.mysql.com/downloads/mysql/"&gt;点击这个链接下载 MySQL 的安装包&lt;/a&gt;，请下载 Mac OS X ver. 10.6 (x86, 64-bit), DMG Archive(可以在 Mountain Lion 下正常工作)。&lt;/p&gt;
+
+        &lt;p&gt;点击下载之后，会跳转到一个注册/登录页面，你不需要注册也不需要登录，直接点登录框下面的：No thanks, just take me to the downloads! 就可以跳过这个步骤直接开始下载了，整个 DMG 包大约是113MB。&lt;/p&gt;
+
+        &lt;p&gt;&lt;img src="http://img.guomii.com/2012/08/Snip20120806_5-600x403.png" alt="" title="Snip20120806_5" class="aligncenter size-large wp-image-30145" height="403" width="600"&gt;&lt;/p&gt;
+
+            &lt;p&gt;下载完DMG之后，双击你会提取出三个文件和一个 RedMe.txt 文档。这三个文件分别是：&lt;/p&gt;
+
+            &lt;ul&gt;
+
+                &lt;li&gt;mysql5.5.xxx.pkg&lt;/li&gt;&lt;li&gt;MySQLstartupitem.pkg&lt;/li&gt;&lt;li&gt;MySQLPrefPane&lt;/li&gt;&lt;/ul&gt;
+
+            &lt;p&gt;你需要逐一安装这三个文件，双击之后系统可能会提示你由于该软件包来自身份不明的开发者，不能安装。遇到这种情况，你可以按住 command 键，然后右键点击安装文件，再点击右键菜单中的”打开”，这样就可以绕过这个安全限制了(当然你也可以在系统偏好设置——安全性与隐私——通用中改成可打开”任何来源”的应用程序)。&lt;/p&gt;
+
+            &lt;p&gt;三个文件都安装完成之后，进入「系统偏好设置」，在面板的最下面你会看到一个 MySQL 的设置项，点击它之后就可以启动MySQL，或者你也可以通过下面的命令开启：&lt;/p&gt;
+
+            &lt;blockquote&gt;
+
+                &lt;p&gt;sudo /usr/local/mysql/support-files/mysql.server start&lt;/p&gt;
+
+            &lt;/blockquote&gt;
+
+            &lt;p&gt;如果你想查看 MySQL 的版本，可以用下面这个命令：&lt;/p&gt;
+
+            &lt;blockquote&gt;
+
+                &lt;p&gt;/usr/local/mysql/bin/mysql -v&lt;/p&gt;
+
+            &lt;/blockquote&gt;
+
+            &lt;p&gt;运行上面这个命令之后，会直接从命令行中登录到 MySQL，输入命令 \q 即可退出。&lt;/p&gt;
+
+            &lt;p&gt;&lt;img src="http://img.guomii.com/2012/08/Snip20120806_2-600x297.png" alt="" title="Snip20120806_2" class="aligncenter size-large wp-image-30143" height="297" width="600"&gt;&lt;/p&gt;
+
+                &lt;p&gt;到这里 MySQL 已经配置完成，并且可以运行。但为了更加方便使用，你最好再设置一下系统环境变量，也就是让 mysql 这个命令在任何路径都可以直接启动(不需要输入一长串的准确路径)。&lt;/p&gt;
+
+                &lt;p&gt;设置环境变量也很方便，直接用命令(这里笔者用 vi 编辑器举例)：&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;cd ; vi .bash_profile&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;然后按字母 i 进入编辑模式，将下面的这句代码贴进去：&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;&lt;code&gt;export PATH=&amp;quot;/usr/local/mysql/bin:$PATH&amp;quot;&lt;/code&gt;&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;然后按 esc 退出编辑器，再输入 :wq(别忘了冒号)保存退出。当然你如果使用 nano 或者别的编辑器的话，操作方式跟这个可能不一样，反正意思就是将上面那句话写入到 .bash_profile 文件中。&lt;/p&gt;
+
+                &lt;p&gt;接下来还要重新加载一下 Shell 以让上面的环境变量生效：&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;source ~/.bash_profile&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;之后你就可以在终端的任意目录使用 mysql 命令了，你可以运行 mysql -v 试试。&lt;/p&gt;
+
+                &lt;p&gt;最后一步，你还应该给你的 MySQL 设置一个 root 用户密码，命令如下：&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;&lt;code&gt;mysqladmin -u root password '这里填你要设置的密码'&lt;/code&gt;&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;(请记住密码一定要用半角单引号包起来)&lt;/p&gt;
+
+                &lt;p&gt;上面的 mysqladmin 命令，我没有写完整路径。因为上面我们已经设置了环境变量，如果你没有设置环境变量的话，就需要用/usr/local/mysql/bin/mysqladmin ******** 来运行。&lt;/p&gt;
+
+                &lt;h3&gt;安装 phpMyAdmin&lt;/h3&gt;
+
+                &lt;p&gt;在安装 phpMyAdmin 之前，请首先修复 2002 socket 错误：&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;sudo mkdir /var/mysql&lt;/p&gt;
+
+                    &lt;p&gt;sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;然后&lt;a href="http://www.phpmyadmin.net/home_page/downloads.php"&gt;去 phpMyAdmin 网站下载安装包&lt;/a&gt;，推荐下载 english.tar.gz。解压之后，将解压出来的文件夹改名为”phpmyadmin”，并放到上面建立的”站点”目录下(~/Sites)。然后在 phpmyadmin 下建立一个 config 文件夹：&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;mkdir ~/Sites/phpmyadmin/config&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;修改权限:&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;chmod o&amp;#43;w ~/Sites/phpmyadmin/config&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;之后就可以从浏览器中访问phpmyadmin的初始设置页面了:&lt;/p&gt;
+
+                &lt;blockquote&gt;
+
+                    &lt;p&gt;http://localhost/~username/phpmyadmin/setup/&lt;/p&gt;
+
+                &lt;/blockquote&gt;
+
+                &lt;p&gt;(请将 username 修改成你的用户名)&lt;/p&gt;
+
+                &lt;p&gt;打开页面之后，基本上不需要配置。进去之后点击”New server”，在 Basic settings 页面确保 Serverhostname 是 localhost，在 Authentication 配置好登陆用户名和密码(之前设置的 root 密码)，点击保存就可以了。&lt;/p&gt;
+
+                &lt;p&gt;phpMyAdmin配置完成之后，上面建立的 /config 目录中会出现一个 config.inc.php 文件，将这个文件移到 phpmyadmin 根目录(上一级)，然后删除这个空的 /config 目录。&lt;/p&gt;
+
+                &lt;p&gt;到这里就算完成了，接下来你就可以访问 http://localhost/~username/phpmyadmin/ (将username替换成你的用户名)来通过 phpmysql 管理你的数据库了。&lt;/p&gt;
+
+                &lt;p&gt;以上便是在 OS X Mountain Lion 上配置 Apache&amp;#43;Mysql&amp;#43;Php 的完整教程。如果大家有任何不明白的地方，请在下面评论框中提问。&lt;/p&gt;
+</code></pre>
+</body>
+</html>

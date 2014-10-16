@@ -1,0 +1,556 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>---
+layout: contentpage
+title: NSRunLoop
+categories: [object-c_IOS]
+date: 2013-07-29 11:13:32</title>
+
+</head>
+<body>
+<hr />
+
+<p>layout: contentpage
+title: NSRunLoop
+categories: [object-c_IOS]
+date: 2013-07-29 11:13:32
+sourceType: 2---</p>
+
+<p><a href="http://hi.baidu.com/suncgsamsom/item/fddbd59a8eda40d91f42713a">NSRunLoop</a><br>
+
+</p>
+
+
+
+
+<p>1.NSRunLoop是消息机制的处理模式</p>
+
+
+
+
+<p>NSRunLoop的作用在于有事情做的时候使的当前NSRunLoop的线程工作，没有事情做让当前NSRunLoop的线程休眠</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>2.nstimer默认添加到当前NSRunLoop中，也可以手动制定添加到自己新建的NSRunLoop的中</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>[NSTimer&nbsp;schduledTimerWithTimeInterval:&nbsp;target:selector:userInfo:repeats];</p>
+
+
+
+
+<p>此方法默认添加到当前NSRunLoop中</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>NSTimer&nbsp;*timer&nbsp;=&nbsp;[NSTimer&nbsp;timerWithTimeInterval:&nbsp;invocation:repeates:];</p>
+
+
+
+
+<p>NSTimer&nbsp;*timer&nbsp;=&nbsp;[[NSTimer&nbsp;alloc]&nbsp;initWithFireDate:...];<br>
+
+</p>
+
+
+
+
+<p>创建timer&nbsp;&nbsp;<span>[[NSRunLoop&nbsp;currentRunLoop]&nbsp;<em>addTimer</em>:timer&nbsp;forMode:NSRunLoopCommonModes];&nbsp;</span></p>
+
+
+
+
+<p>注意&nbsp;timer的释放</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>3.NSRunLoop就是一直在循环检测，从线程start到线程end，检测inputsource(如点击，双击等操作)同步事件，检测timesource同步事件，检测到输入源会执行处理函数，首先会产生通知，corefunction向线程添加runloop&nbsp;observers来监听事件，意在监听事件发生时来做处理。</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>4.runloopmode是一个集合，包括监听：事件源，定时器，以及需通知的runloop&nbsp;observers</p>
+
+
+
+
+<p>模式包括：</p>
+
+
+
+
+<p>default模式：几乎包括所有输入源(除NSConnection)&nbsp;NSDefaultRunLoopMode模式&nbsp;<br>
+
+</p>
+
+
+
+
+<p>mode模式：处理modal&nbsp;panels</p>
+
+
+
+
+<p>connection模式：处理NSConnection事件，属于系统内部，用户基本不用</p>
+
+
+
+
+<p>event&nbsp;tracking模式：如组件拖动输入源&nbsp;UITrackingRunLoopModes&nbsp;不处理定时事件&nbsp;</p>
+
+
+
+
+<p>common&nbsp;modes模式：NSRunLoopCommonModes&nbsp;这是一组可配置的通用模式。将input&nbsp;sources与该模式关联则同时也将input&nbsp;sources与该组中的其它模式进行了关联。&nbsp;<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><span>每次运行一个run&nbsp;loop，你指定（显式或隐式）run&nbsp;loop的运行模式。当相应的模式传递给run&nbsp;loop时，只有与该模式对应的input&nbsp;sources才被监控并允许run&nbsp;loop对事件进行处理（与此类&#20284;，也只有与该模式对应的observers才会被通知）</span></p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>例：</p>
+
+
+
+
+<p>1).在timer与table同时执行情况，当拖动table时，runloop进入UITrackingRunLoopModes模式下，不会处理定时事件，此时timer不能处理，所以此时将timer加入到NSRunLoopCommonModes模式(addTimer&nbsp;forMode)</p>
+
+
+
+
+<p>2).在scroll一个页面时来松开，此时connection不会收到消息，由于scroll时runloop为UITrackingRunLoopModes模式，不接收输入源，此时要修改connection的mode</p>
+
+
+
+
+<p>[scheduleInRunLoop:<span>[NSRunLoop&nbsp;currentRunLoop]</span>forMode:NSRunLoopCommonModes];</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>5.关于-(BOOL)runMode:(NSString&nbsp;*)mode&nbsp;beforeDate:(NSDate&nbsp;*)date;方法</p>
+
+
+
+
+<p>指定runloop模式来处理输入源，首个输入源或date结束退出。</p>
+
+
+
+
+<p>暂停当前处理的流程，转而处理其他输入源，当date设置为[NSDate&nbsp;distantFuture](将来，基本不会到达的时间)，所以除非处理其他输入源结束，否则永不退出处理暂停的当前处理的流程。</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>6.while(A){</p>
+
+
+
+
+<p>&nbsp;<span>[[NSRunLoop&nbsp;currentRunLoop]&nbsp;runMode:NSDefaultRunLoopMode&nbsp;beforeDate:[NSDate&nbsp;distantFuture]];&nbsp;</span><br>
+
+</p>
+
+
+
+
+<p>}</p>
+
+
+
+
+<p>当前A为YES时，当前runloop会一直接收处理其他输入源，当前流程不继续处理，出为A为NO，当前流程继续</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>7.<span>perform&nbsp;selector在thread中被序列化执行，这样就缓和了许多在同一个thread中运行多个方法所产生的同步问题。perform&nbsp;selector&nbsp;source在运行完selector后自动从run&nbsp;loop中移除。</span></p>
+
+
+
+
+<p><span>当在非main&nbsp;thread中perform&nbsp;selector时，其thread中必须有一个激活的run&nbsp;loop。对于你自己创建的thread而言，只有你的代码显式的运行一个run&nbsp;loop后该perform&nbsp;selector才能得到执行。Run&nbsp;loop在当loop运行时处理所有已排队的perform&nbsp;selector，而不是在一个loop循环时只处理某一个perform&nbsp;selector。</span></p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>8.performSelector关于内存管理的执行原理是这样的执行&nbsp;[self&nbsp;performSelector:@selector(method1:)&nbsp;withObject:self.tableLayer&nbsp;afterDelay:3];&nbsp;的时候，系统会将tableLayer的引用计数加1，执行完这个方法时，还会将tableLayer的引用计数减1，由于延迟这时tableLayer的引用计数没有减少到0，也就导致了切换场景dealloc方法没有被调用，出现了内存泄露。</p>
+
+
+
+
+<p>利用如下函数：</p>
+
+
+
+
+<p>[NSObject&nbsp;cancelPreviousPerformRequestsWithTarget:self]</p>
+
+
+
+
+<p>当然你也可以一个一个得这样用：</p>
+
+
+
+
+<p>[NSObject&nbsp;cancelPreviousPerformRequestsWithTarget:self&nbsp;selector:@selector(method1:)&nbsp;object:nil]</p>
+
+
+
+
+<p>加上了这个以后，顺利地执行了dealloc方法</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>在touchBegan里面</p>
+
+
+
+
+<p>[self&nbsp;performSelector:@selector(longPressMethod:)&nbsp;withObject:nil&nbsp;afterDelay:longPressTime]</p>
+
+
+
+
+<p>然后在end&nbsp;或cancel里做判断，如果时间不够长按的时间调用：</p>
+
+
+
+
+<p>[NSObject&nbsp;cancelPreviousPerformRequestsWithTarget:self&nbsp;selector:@selector(longPressMethod:)&nbsp;object:nil]</p>
+
+
+
+
+<p>取消began里的方法</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>**********************************以下是我在cocoachina中看到的一份总结&nbsp;转载过来</p>
+
+
+<p>线程实现的几种方式：<br></p>
+
+<p>1.&nbsp;Operation&nbsp;Objects&nbsp;&nbsp;&nbsp;//&nbsp;NSOperation及相关子类<br></p>
+
+<p>2.&nbsp;*****&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dispatch_async等相关函数<br></p>
+
+<p>3.&nbsp;Idle-time&nbsp;notifications&nbsp;&nbsp;//&nbsp;&nbsp;NSNotificationQueue,低优先级<br></p>
+
+<p>3.&nbsp;Asynchronous&nbsp;functions&nbsp;&nbsp;//&nbsp;异步函数<br></p>
+
+<p>4.&nbsp;Timers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;NSTimer<br></p>
+
+<p>5.&nbsp;Separate&nbsp;processes&nbsp;&nbsp;//&nbsp;没用过<br></p>
+
+<p><br></p>
+
+<p>线程创建的成本：<br></p>
+
+<p>kernel&nbsp;data&nbsp;structures&nbsp;&nbsp;约1KB<br></p>
+
+<p>Stack&nbsp;space&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;512KB(secondary&nbsp;threads)&nbsp;<br></p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1MB(iOS&nbsp;main&nbsp;thread)<br></p>
+
+<p>Creation&nbsp;time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;约90&nbsp;microseconds<br></p>
+
+<p><br></p>
+
+<p>Run&nbsp;Loop和线程的关系：<br></p>
+
+<p>1.&nbsp;主线程的run&nbsp;loop默认是启动的，用于接收各种输入sources<br></p>
+
+<p>2.&nbsp;对第二线程来说，run&nbsp;loop默认是没有启动的，如果你需要更多的线程交互则可以手动配置和启动，如果线程执行一个长时间已确定的任务则不需要。<br></p>
+
+<p><br></p>
+
+<p>Run&nbsp;Loop什么情况下使用：<br></p>
+
+<p>a.&nbsp;使用ports&nbsp;或&nbsp;input&nbsp;sources&nbsp;和其他线程通信&nbsp;&nbsp;&nbsp;//&nbsp;不了解<br></p>
+
+<p>b.&nbsp;在线程中使用timers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;如果不启动run&nbsp;loop，timer的事件是不会响应的&nbsp;<br></p>
+
+<p>c.&nbsp;在Cocoa&nbsp;应用中使用performSelector...方法&nbsp;&nbsp;&nbsp;//&nbsp;应该是performSelector...这种方法会启动一个线程并启动run&nbsp;loop吧<br></p>
+
+<p>d.&nbsp;让线程执行一个周期性的任务&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;如果不启动run&nbsp;loop，&nbsp;线程跑完就可能被系统释放了<br></p>
+
+<p><br></p>
+
+<p>注：timer的创建和释放必须在同一线程中。<br></p>
+
+<p>[[NSRunLoop&nbsp;currentRunLoop]&nbsp;addTimer:timer&nbsp;forMode:NSRunLoopCommonModes];&nbsp;&nbsp;此方法会retain&nbsp;timer对象的引用计数。<br></p>
+</body>
+</html>
