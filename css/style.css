@@ -27,9 +27,9 @@ input.button {	margin: 0;	border: 0;	height: 24px;	padding: 0px 12px 0px 12px;}
 a.button:hover, input.button:hover {background: #006699;color:#ffffff;}
 
 /*-------------container */
-.container{width:960px; background-color:#1E1E1E; margin:0 auto;border-right:5px solid #252525;border-left:5px solid #252525;}
+.container{ margin:0 auto;border-right:5px solid #252525;border-left:5px solid #252525;}
 /*-------------header */
-header {position:relative;height: 150px; background-color:#141414; border-bottom:5px solid #252525;}
+header {position:relative;height: 100px; background-color:rgb(255,255,255); border-bottom:5px solid #252525;}
 
 header #logo {position:absolute; top:40px; left: 30px;}
 
@@ -40,12 +40,12 @@ header #search-box input[type="text"] {width: 80%;padding: 5px 0 5px 1em;color: 
 header #search-button {position: absolute;top: 0;right: 0;height: 27px;width: 80px;font-size: 14px;color: #fff;text-align: center;line-height: 26px;background-color: #999;cursor: pointer;border:0px;}
 
 /*------------menu */
-header nav {position:absolute;top:50px; right:50px;height: 37px;background:#000000;}
+header nav {position:absolute;top:50px; right:50px;height: 37px;background:rgb(255,255,255);}
 header nav ul {list-style: none;margin: 0;padding: 0;}
 header nav ul li {position: relative;float: left;padding: 6px 5px 0px 5px}
 header nav ul li:hover {}
-header nav ul li a {font-size: 13px; line-height:14px;color: #686868;display: block;padding: 6px 10px 6px 10px;margin-bottom: 5px;z-index: 6;position: relative;font-weight:bold;}
-header nav ul li:hover a{color:#ffffff;}
+header nav ul li a {font-size: 13px; line-height:14px;color: rgb(100,100,100);display: block;padding: 6px 10px 6px 10px;margin-bottom: 5px;z-index: 6;position: relative;font-weight:bold;}
+header nav ul li:hover a{color:rgb(0,0,0);}
 
 /*-------------content */
 #content {}
