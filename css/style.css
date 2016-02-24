@@ -29,7 +29,7 @@ a.button:hover, input.button:hover {background: #006699;color:#ffffff;}
 /*-------------container */
 .container{ margin:0 auto;border-right:5px solid #252525;border-left:5px solid #252525;}
 /*-------------header */
-header {position:relative;height: 100px; background-color:rgb(255,255,255); border-bottom:5px solid #252525;}
+header {position:relative;height: 140px; background-color:rgb(255,255,255); border-bottom:5px solid #252525;}
 
 header #logo {position:absolute; top:40px; left: 30px;}
 
@@ -40,7 +40,7 @@ header #search-box input[type="text"] {width: 80%;padding: 5px 0 5px 1em;color: 
 header #search-button {position: absolute;top: 0;right: 0;height: 27px;width: 80px;font-size: 14px;color: #fff;text-align: center;line-height: 26px;background-color: #999;cursor: pointer;border:0px;}
 
 /*------------menu */
-header nav {position:absolute;top:50px; right:50px;height: 37px;background:rgb(255,255,255);}
+header nav {position:absolute;bottom:10px; left:50px;height: 37px;background:rgb(255,255,255);}
 header nav ul {list-style: none;margin: 0;padding: 0;}
 header nav ul li {position: relative;float: left;padding: 6px 5px 0px 5px}
 header nav ul li:hover {}
