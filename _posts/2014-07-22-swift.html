@@ -1,0 +1,482 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>---
+layout: contentpage
+title: Swift之 ? 和 !
+tags: [Swift_IOS]
+date: 2014-07-22 11:08</title>
+
+</head>
+<body>
+<hr />
+
+<p>layout: contentpage
+title: Swift之 ? 和 !
+tags: [Swift_IOS]
+date: 2014-07-22 11:08:49
+sourceType: 2---</p>
+
+<div class="page-header" style="padding-bottom:9px; margin:20px 0px 30px; border-bottom-width:1px; border-bottom-style:solid; border-bottom-color:rgb(238,238,238)">
+
+<h1 style="margin:10px 0px; font-family:inherit; line-height:40px; color:inherit; font-size:38.5px">
+
+<a target="_blank" href="http://joeyio.com/ios/2014/06/04/swift---/">Swift之 ? 和 !</a></h1>
+
+</div>
+
+
+
+
+<div class="row-fluid post-full" style="width:700px">
+
+<div class="span12" style="float:left; min-height:30px; margin-left:0px; width:700px">
+
+<div class="date" style="margin-bottom:20px; font-weight:bold">04 June 2014</div>
+
+<div class="content" style="font-size:16px">
+
+<div style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px; text-align:center; margin-bottom:10px">
+
+<img src="http://joeyio.com/assets/resources/swift-hero.png" height="" width="" alt="" style="max-width:100%; height:auto; vertical-align:middle; border:0px"></div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+Swift语言使用var定义变量，但和别的语言不同，Swift里不会自动给变量赋初始&#20540;，也就是说变量不会有默认&#20540;，所以要求使用变量之前必须要对其初始化。如果在使用变量之前不进行初始化就会报错：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="n">var</span> <span class="n">stringValue</span> <span class="o" style="font-weight:bold">:</span> <span class="n">String</span> 
+<span class="c1" style="color:rgb(153,153,136); font-style:italic">//error: variable 'stringValue' used before being initialized</span>
+<span class="c1" style="color:rgb(153,153,136); font-style:italic">//let hashValue = stringValue.hashValue</span>
+<span class="c1" style="color:rgb(153,153,136); font-style:italic">//                            ^</span>
+<span class="n">let</span> <span class="n">hashValue</span> <span class="o" style="font-weight:bold">=</span> <span class="n">stringValue</span><span class="p">.</span><span class="n">hashValue</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+上面了解到的是普通&#20540;，接下来Optional&#20540;要上场了。经<a target="_blank" href="http://onevcat.com/" style="color:rgb(0,136,204); text-decoration:none">喵神</a>提醒，Optional其实是个<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">enum</code>，里面有<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">None</code>和<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Some</code>两种类型。其实所谓的nil就是<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Optional.None</code>,
+
+ 非nil就是<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Optional.Some</code>, 然后会通过<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Some(T)</code>包装（wrap）原始&#20540;，这也是为什么在使用Optional的时候要拆包（从enum里取出来原始&#20540;）的原因,
+
+ 也是PlayGround会把Optional&#20540;显示为类&#20284;<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">{Some &quot;hello
+
+ world&quot;}</code>的原因，这里是enum Optional的定义：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="k" style="font-weight:bold">enum</span> <span class="n">Optional</span><span class="o" style="font-weight:bold">&lt;</span><span class="n">T</span><span class="o" style="font-weight:bold">&gt;</span> <span class="o" style="font-weight:bold">:</span> <span class="n">LogicValue</span><span class="p">,</span> <span class="n">Reflectable</span> <span class="p">{</span>
+    <span class="k" style="font-weight:bold">case</span> <span class="n">None</span>
+    <span class="k" style="font-weight:bold">case</span> <span class="n">Some</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">init</span><span class="p">()</span>
+    <span class="n">init</span><span class="p">(</span><span class="n">_</span> <span class="n">some</span><span class="o" style="font-weight:bold">:</span> <span class="n">T</span><span class="p">)</span>
+
+    <span class="c1" style="color:rgb(153,153,136); font-style:italic">/// Allow use in a Boolean context.</span>
+    <span class="n">func</span> <span class="n">getLogicValue</span><span class="p">()</span> <span class="o" style="font-weight:bold">-&gt;</span> <span class="n">Bool</span>
+
+    <span class="c1" style="color:rgb(153,153,136); font-style:italic">/// Haskell's fmap, which was mis-named</span>
+    <span class="n">func</span> <span class="n">map</span><span class="o" style="font-weight:bold">&lt;</span><span class="n">U</span><span class="o" style="font-weight:bold">&gt;</span><span class="p">(</span><span class="n">f</span><span class="o" style="font-weight:bold">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o" style="font-weight:bold">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o" style="font-weight:bold">-&gt;</span> <span class="n">U</span><span class="o" style="font-weight:bold">?</span>
+    <span class="n">func</span> <span class="n">getMirror</span><span class="p">()</span> <span class="o" style="font-weight:bold">-&gt;</span> <span class="n">Mirror</span>
+<span class="p">}</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+声明为Optional只需要在类型后面<strong>紧跟</strong>一个<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">?</code>即可。如:</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="n">var</span> <span class="n">strValue</span><span class="o" style="font-weight:bold">:</span> <span class="n">String</span><span class="o" style="font-weight:bold">?</span>   <span class="c1" style="color:rgb(153,153,136); font-style:italic">//?相当于下面这种写法的语法糖</span>
+<span class="n">var</span> <span class="n">strValue</span><span class="o" style="font-weight:bold">:</span> <span class="n">Optional</span><span class="o" style="font-weight:bold">&lt;</span><span class="n">String</span><span class="o" style="font-weight:bold">&gt;</span>  
+</code></pre>
+
+</div>
+
+<blockquote style="padding:0px 0px 0px 15px; margin:0px 0px 20px; border-left-width:5px; border-left-style:solid; border-left-color:rgb(238,238,238); color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<p style="margin-top:0px; margin-bottom:0px; line-height:1.7; letter-spacing:1px">
+
+上面这个Optional的声明，意思不是”我声明了一个Optional的String&#20540;”, 而是”我声明了一个Optional类型&#20540;，它可能包含一个String&#20540;，也可能什么都不包含”，也就是说实际上我们声明的是Optional类型，而不是声明了一个String类型，这一点需要铭记在心。</p>
+
+</blockquote>
+
+<blockquote style="padding:0px 0px 0px 15px; margin:0px 0px 20px; border-left-width:5px; border-left-style:solid; border-left-color:rgb(238,238,238); color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<p style="margin-top:0px; margin-bottom:0px; line-height:1.7; letter-spacing:1px">
+
+建议再读一遍上段文字。</p>
+
+</blockquote>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+一旦声明为Optional的，如果不显式的赋&#20540;就会有个默认&#20540;nil。判断一个Optional的&#20540;是否有&#20540;，可以用if来判断：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="k" style="font-weight:bold">if</span> <span class="n">strValue</span> <span class="p">{</span>
+    <span class="c1" style="color:rgb(153,153,136); font-style:italic">//do sth with strValue</span>
+<span class="p">}</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+然后怎么使用Optional&#20540;呢？文档中也有提到说，在使用Optional&#20540;的时候需要在具体的操作，比如调用方法、属性、下标索引等前面需要加上一个<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">?</code>，如果是nil&#20540;，也就是<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Optional.None</code>，会跳过后面的操作不执行，如果有&#20540;，就是<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Optional.Some</code>，可能就会拆包(unwrap)，然后对拆包后的&#20540;执行后面的操作，来保证执行这个操作的安全性，比如：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="n">let</span> <span class="n">hashValue</span> <span class="o" style="font-weight:bold">=</span> <span class="n">strValue</span><span class="o" style="font-weight:bold">?</span><span class="p">.</span><span class="n">hashValue</span> 
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+strValue是Optional的字符串，如果strValue是nil，则hashValue也为nil，如果strValue不为nil，hashValue就是strValue字符串的哈希&#20540;(其实也是用Optional wrap后的&#20540;)</p>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+另外，?还可以用在安全地调用protocol类型方法上，比如：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px">    
+<span class="p">@</span><span class="n">objc</span> <span class="n">protocol</span> <span class="n">Downloadable</span> <span class="p">{</span>
+    <span class="k" style="font-weight:bold">@optional</span> <span class="n">func</span> <span class="n">download</span><span class="p">(</span><span class="n">toPath</span><span class="o" style="font-weight:bold">:</span> <span class="n">String</span><span class="p">)</span> <span class="o" style="font-weight:bold">-&gt;</span> <span class="n">Bool</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="n">objc</span> <span class="n">class</span> <span class="n">Content</span><span class="o" style="font-weight:bold">:</span> <span class="n">Downloadable</span> <span class="p">{</span>
+    <span class="c1" style="color:rgb(153,153,136); font-style:italic">//download method not be implemented</span>
+<span class="p">}</span>
+
+<span class="n">var</span> <span class="n">delegate</span><span class="o" style="font-weight:bold">:</span> <span class="n">Downloadable</span> <span class="o" style="font-weight:bold">=</span> <span class="n">Downloadable</span><span class="p">()</span>
+<span class="n">delegate</span><span class="p">.</span><span class="n">download</span><span class="o" style="font-weight:bold">?</span><span class="p">(</span><span class="s" style="color:rgb(221,17,68)">&quot;some path&quot;</span><span class="p">)</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+因为上面的delegate是Downloadable类型的，它的<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">download</code>方法是optional，所以它的具体实现有没有<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">download</code>方法是不确定的。Swift提供了一种在参数括号前加上一个<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">?</code>的方式来安全地调用protocol的optional方法。</p>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+另外如果你需要像下面这样向下转型(Downcast)，可能会用到&nbsp;<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">as?</code>：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="k" style="font-weight:bold">if</span> <span class="n">let</span> <span class="n">dataSource</span> <span class="o" style="font-weight:bold">=</span> <span class="n">object</span> <span class="n">as</span><span class="o" style="font-weight:bold">?</span> <span class="n">UITableViewDataSource</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">rowsInFirstSection</span>  <span class="o" style="font-weight:bold">=</span> <span class="n">dataSource</span><span class="p">.</span><span class="n">tableView</span><span class="p">(</span><span class="n">tableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span><span class="o" style="font-weight:bold">:</span> <span class="mi" style="color:rgb(0,153,153)">0</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+</div>
+
+<blockquote style="padding:0px 0px 0px 15px; margin:0px 0px 20px; border-left-width:5px; border-left-style:solid; border-left-color:rgb(238,238,238); color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<p style="margin-top:0px; margin-bottom:0px; line-height:1.7; letter-spacing:1px">
+
+到这里我们看到了<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">?</code>的几种使用场景:<br>
+
+1.声明Optional&#20540;变量<br>
+
+2.用在对Optional&#20540;操作中，用来判断是否能响应后面的操作<br>
+
+3.用于安全调用protocol的optional方法<br>
+
+4.使用 as? 向下转型(Downcast)</p>
+
+</blockquote>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+另外，对于Optional&#20540;，不能直接进行操作，否则会报错：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="c1" style="color:rgb(153,153,136); font-style:italic">//error: 'String?' does not have a member named 'hashValue'</span>
+<span class="c1" style="color:rgb(153,153,136); font-style:italic">//let hashValue = strValue.hashValue</span>
+<span class="c1" style="color:rgb(153,153,136); font-style:italic">//                ^        ~~~~~~~~~</span>
+
+<span class="n">let</span> <span class="n">hashValue</span> <span class="o" style="font-weight:bold">=</span> <span class="n">strValue</span><span class="p">.</span><span class="n">hashValue</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+上面提到Optional&#20540;需要拆包(unwrap)后才能得到原来&#20540;，然后才能对其操作，那怎么来拆包呢？拆包提到了几种方法，一种是<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Optional
+
+ Binding</code>， 比如：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="k" style="font-weight:bold">if</span> <span class="n">let</span> <span class="n">str</span> <span class="o" style="font-weight:bold">=</span> <span class="n">strValue</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">hashValue</span> <span class="o" style="font-weight:bold">=</span> <span class="n">str</span><span class="p">.</span><span class="n">hashValue</span>
+<span class="p">}</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+还有一种是在具体的操作前添加<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">!</code>符号，好吧，这又是什么诡异的语法?!</p>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+直接上例子，strValue是Optional的String：</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="n">let</span> <span class="n">hashValue</span> <span class="o" style="font-weight:bold">=</span> <span class="n">strValue</span><span class="o" style="font-weight:bold">!</span><span class="p">.</span><span class="n">hashValue</span> 
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+这里的<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">!</code>表示“我确定这里的的strValue一定是非nil的，尽情调用吧”
+
+ ，比如这种情况:</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="k" style="font-weight:bold">if</span> <span class="n">strValue</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">hashValue</span> <span class="o" style="font-weight:bold">=</span> <span class="n">strValue</span><span class="o" style="font-weight:bold">!</span><span class="p">.</span><span class="n">hashValue</span>
+<span class="p">}</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+{}里的strValue一定是非nil的，所以就能直接加上!，强制拆包(unwrap)并执行后面的操作。 当然如果不加判断，strValue不小心为nil的话，就会出错，crash掉。</p>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+考虑下这一种情况，我们有一个自定义的<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">MyViewController</code>类，类中有一个属性是<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">myLabel</code>，myLabel是在viewDidLoad中进行初始化。因为是在viewDidLoad中初始化，所以不能直接声明为普通&#20540;：<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">var
+
+ myLabel : UILabel</code>，因为非Optional的变量必须在声明时或者构造器中进行初始化，但我们是想在viewDidLoad中初始化，所以就只能声明为Optional：<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">var
+
+ myLabel: UILabel?</code>, 虽然我们确定在viewDidLoad中会初始化，并且在ViewController的生命周期内不会置为nil，但是在对myLabel操作时，每次依然要加上<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">!</code>来强制拆包(在读取&#20540;的时候，也可以用<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">?</code>，谢谢iPresent在回复中提醒)，比如:</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="n">myLabel</span><span class="o" style="font-weight:bold">!</span><span class="p">.</span><span class="n">text</span> <span class="o" style="font-weight:bold">=</span> <span class="s" style="color:rgb(221,17,68)">&quot;text&quot;</span>
+<span class="n">myLabel</span><span class="o" style="font-weight:bold">!</span><span class="p">.</span><span class="n">frame</span> <span class="o" style="font-weight:bold">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi" style="color:rgb(0,153,153)">0</span><span class="p">,</span> <span class="mi" style="color:rgb(0,153,153)">0</span><span class="p">,</span> <span class="mi" style="color:rgb(0,153,153)">10</span><span class="p">,</span> <span class="mi" style="color:rgb(0,153,153)">10</span><span class="p">)</span>
+<span class="p">...</span>
+</code></pre>
+
+</div>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+对于这种类型的&#20540;，我们可以直接这么声明：<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">var myLabel: UILabel!</code>,
+
+ 果然是高(hao)大(gui)上(yi)的语法!, 这种是特殊的Optional，称为<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Implicitly
+
+ Unwrapped Optionals</code>, 直译就是隐式拆包的Optional，就等于说你每次对这种类型的&#20540;操作时，都会自动在操作前补上一个<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">!</code>进行拆包，然后在执行后面的操作，当然如果该&#20540;是nil，也一样会报错crash掉。</p>
+
+<div class="highlight" style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<pre style="padding:9.5px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:13px; margin-top:0px; margin-bottom:10px; word-break:break-all; word-wrap:break-word; white-space:pre-wrap; background-color:rgb(245,245,245)"><code class="objc" style="padding:0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:inherit; background-color:transparent; border:0px"><span class="n">var</span> <span class="n">myLabel</span><span class="o" style="font-weight:bold">:</span> <span class="n">UILabel</span><span class="o" style="font-weight:bold">!</span>  <span class="c1" style="color:rgb(153,153,136); font-style:italic">//!相当于下面这种写法的语法糖</span>
+<span class="n">var</span> <span class="n">myLabel</span><span class="o" style="font-weight:bold">:</span> <span class="n">ImplicitlyUnwrappedOptional</span><span class="o" style="font-weight:bold">&lt;</span><span class="n">UILabel</span><span class="o" style="font-weight:bold">&gt;</span>
+</code></pre>
+
+</div>
+
+<blockquote style="padding:0px 0px 0px 15px; margin:0px 0px 20px; border-left-width:5px; border-left-style:solid; border-left-color:rgb(238,238,238); color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:20px">
+
+<p style="margin-top:0px; margin-bottom:0px; line-height:1.7; letter-spacing:1px">
+
+那么<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">!</code>大概也有两种使用场景<br>
+
+1.强制对Optional&#20540;进行拆包(unwrap)<br>
+
+2.声明<code style="padding:2px 4px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12px; color:rgb(221,17,68); background-color:rgb(247,247,249); border:1px solid rgb(225,225,232); white-space:nowrap">Implicitly Unwrapped Optionals</code>&#20540;，一般用于类中的属性</p>
+
+</blockquote>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+Swift是门新生的语言，我们有幸见证了它的诞生，激动之余也在佩服苹果大刀阔斧的推出一个新的语言替代一个已经比较成熟语言的魄力，今天在知乎日报上看到一个回答是说Swift是一门玩具语言，正当想去吐槽，发现回答已经被删除了。个人认为苹果是很认真的推出Swift的，从Swift的各种细微的设计也能看的出来。</p>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+另外这两个小符号就花费了我不少的时间来理解，可能依然会有错误和不妥之处，欢迎大家指正，本文旨在抛砖引玉。除此之外，Swift还有很多很棒的特性，WWDC 2014 会有四五个和Swift语言相关的Video，大家也可以去关注一下。</p>
+
+<p style="margin-top:0px; margin-bottom:10px; line-height:1.7; letter-spacing:1px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+最后要感谢<a target="_blank" href="http://onevcat.com/" style="color:rgb(0,136,204); text-decoration:none">喵神</a>的纠正了多处有问题的地方，thx, have fun!</p>
+
+<div><br>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+</body>
+</html>

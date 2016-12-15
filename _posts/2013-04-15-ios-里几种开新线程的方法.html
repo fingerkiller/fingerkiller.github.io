@@ -1,0 +1,596 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>---
+layout: contentpage
+title: ios 里几种开新线程的方法
+categories: [object-c_IOS</title>
+
+</head>
+<body>
+<hr />
+
+<p>layout: contentpage
+title: ios 里几种开新线程的方法
+categories: [object-c_IOS]
+date: 2013-04-15 16:53:02
+sourceType: 1---</p>
+
+<p>ios里几种常用开线程的方法主要有以下几种</p>
+
+
+
+
+<h2>1.NSObject</h2>
+
+
+
+
+<p>[obj performSelectorInBackground:@selector(testTherd:) withObject:@&quot;performSelectorInBackground&quot;];</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<h2>2.NSThread&nbsp;</h2>
+
+
+
+
+<p>&nbsp;NSThread * newThread = [[NSThread alloc] initWithTarget:ojb selector:@selector(testTherd:) object:@&quot;newThread&quot;];<br>
+
+&nbsp;&nbsp;&nbsp; [newThread start];//需要手动开启</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>&nbsp;NSThread * newThread = [NSThread detachNewThreadSelector:@selector(testTherd:) toTarget:obj withObject:@&quot;detachNewThread&quot;];<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>这两种方法常用的。</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<h2>3.NSOperationQueue</h2>
+
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 维护NSOperation。</p>
+
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSOperation 这个类是抽象类，不能直接使用，需要继承此类使用子类，系统提供了2个子类&nbsp; (NSInvocationOperation 和 NSBlockOperation) 。</p>
+
+
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 自己定义继承的NSOperation分两种情况<br>
+
+</p>
+
+
+
+
+<p><strong>非并发执行</strong></p>
+
+
+
+
+<p>&nbsp;<wbr> -(void)main</p>
+
+
+
+
+<p>&nbsp;<wbr>&nbsp;<wbr>只需要重载这个main方法就可以了。</p>
+
+
+
+
+<p><strong>并发执行</strong></p>
+
+
+
+
+<p>&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>&nbsp;<wbr>并发执行你需要重载如下4个方法</p>
+
+
+
+
+<p>&nbsp;<wbr> &nbsp;<wbr> -(void)start&nbsp;<wbr>&nbsp;&nbsp; //执行任务入口函数</p>
+
+
+
+
+<p>&nbsp;<wbr> &nbsp;<wbr>-(BOOL)isConcurrent&nbsp;<wbr>&nbsp; //返回YES，返回NO不允许。默认返回NO</p>
+
+
+
+
+<p>&nbsp;<wbr> &nbsp;<wbr> - (BOOL)isExecuting</p>
+
+
+
+
+<p>&nbsp;<wbr> &nbsp;<wbr>- (BOOL)isFinished&nbsp; &nbsp;//返回YES时，放在NSOperationQueue里的NSOpertaion释放。<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>当重写了-(void)start&nbsp; 同时有想用 -(void)main 需要手动调用，当不写-(void)start 写了-(void)main 时，系统会调用 -(void)main。</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>简单使用<br>
+
+</p>
+
+
+
+
+<p>&nbsp;&nbsp;&nbsp; NSOperationQueue * queue = [[NSOperationQueue alloc] init];<br>
+
+</p>
+
+
+
+
+<p>&nbsp;&nbsp; NSInvocationOperation * invocationOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(testTherd:) object:@&quot;testInvocationOperation&quot;];</p>
+
+
+
+
+<p><br>
+
+&nbsp;&nbsp;&nbsp; [queue addOperation:invocationOperation];</p>
+
+
+
+
+<p><wbr></p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<h2>4.GCD(Grand Central Dispatch) <br>
+
+</h2>
+
+
+
+
+<p>此技术在Mac OS X 10.6雪豹中首次推出，并随后被引入到了iOS4.0中，主要是为了使用多线程时候能高效利用多盒资源。</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>gcd 的使用和 NSOperationQueue 有些类&#20284;，只不过是C级别的。</p>
+
+
+
+
+<p>需要一个队列 和 要执行的任务。</p>
+
+
+
+
+<p>队列有以下几种：</p>
+
+
+
+
+<p>dispatch_queue_create 创建新的队列用户自己的</p>
+
+
+
+
+<p>dispatch_get_global_queue 获取全局的队列</p>
+
+
+
+
+<p>dispatch_get_main_queue 获取主线程队列</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>dispatch_queue_t dispatch = dispatch_queue_create(&quot;mydispatch&quot;, nil) ;<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>任务是block内容（不完全正确，可能是c函数指针）</p>
+
+
+
+
+<p>例如：<br>
+
+</p>
+
+
+
+
+<p>void (^task1)() = ^(){<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sleep(1);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;%d&quot;,[NSThread isMainThread]);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NSLog(@&quot;task1&quot;);<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br>
+
+&nbsp;&nbsp;&nbsp; };<br>
+
+</p>
+
+
+<p><br></p>
+
+<p>接下来要做的是把任务加到队列里，分为2种，同步和异步</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>dispatch_async(dispatch, task1);//异步处理</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>dispatch_sync(dispatch, task1);//同步处理</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>这里的同步处理&nbsp; NSLog(@&quot;%d&quot;,[NSThread isMainThread]);&nbsp; 这里大打印出来的是1.官方给出的是&nbsp; As an optimization, this function invokes the block on the current thread when possible，所以这个并不一定会开启新的线程。<br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p>关于gcd 给出个大侠的链接：<a href="http://www.dreamingwish.com/dream-2012/gcd%E4%BB%8B%E7%BB%8D%EF%BC%88%E4%B8%80%EF%BC%89-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8Cdispatch-queue.html">GCD</a><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+</body>
+</html>

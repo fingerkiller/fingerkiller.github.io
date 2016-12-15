@@ -1,0 +1,681 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>---
+layout: contentpage
+title: object-c 抓狂的metaclass
+categories: [object-c_IOS]
+date: 2013-04</title>
+
+</head>
+<body>
+<hr />
+
+<p>layout: contentpage
+title: object-c 抓狂的metaclass
+categories: [object-c_IOS]
+date: 2013-04-27 21:59:23
+sourceType: 2---</p>
+
+<p><br></p>
+
+<p>先上张图，个人理解是这样的，如有不对，还请高手指正。</p>
+
+
+
+
+<p><img src="http://img.blog.csdn.net/20130427220508447" alt=""><br>
+
+</p>
+
+
+
+
+<p>这里转载一片高手文章</p>
+
+
+
+
+<p></p>
+
+
+
+
+<h1 class="entry-title"><a href="Objective-C中的meta-class">Objective-C中的meta-class</a></h1>
+
+
+<p><br></p>
+
+<p></p>
+
+
+
+
+<p></p>
+
+
+
+
+<p>讨论Objective-C的一个奇怪的概念 meta-class</p>
+
+
+
+
+<p>在Objective-C中的每个类，都有它自己相关的meta-class，但因为你很少直接使用meta-class,所以显得很神秘。</p>
+
+
+
+
+<p><strong>在运行时建立一个类</strong></p>
+
+
+
+
+<p>下面的代码在运行时创建一个NSError新的子类，并添加一个方法到里面：<br>
+
+Class newClass =<br>
+
+&nbsp;&nbsp; &nbsp;objc_allocateClassPair([NSError class], “RuntimeErrorSubclass”, 0);<br>
+
+class_addMethod(newClass, @selector(report), (IMP)ReportFunction, “v@:”);<br>
+
+objc_registerClassPair(newClass);</p>
+
+
+
+
+<p>添加的这个方法用ReportFunction函数名作为它的实现，实现定义在下面</p>
+
+
+
+
+<p>void ReportFunction(id self, SEL _cmd)<br>
+
+{<br>
+
+&nbsp;&nbsp; &nbsp;NSLog(@”This object is %p.”, self);<br>
+
+&nbsp;&nbsp; &nbsp;NSLog(@”Class is %@, and super is %@.”, [self class], [self superclass]);<br>
+
+&nbsp;<br>
+
+&nbsp;&nbsp; &nbsp;Class currentClass = [self class];<br>
+
+&nbsp;&nbsp; &nbsp;for (int i = 1; i &lt; 5; i&#43;&#43;)<br>
+
+&nbsp;&nbsp; &nbsp;{<br>
+
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;NSLog(@”Following the isa pointer %d times gives %p”, i, currentClass);<br>
+
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;currentClass = object_getClass(currentClass);<br>
+
+&nbsp;&nbsp; &nbsp;}<br>
+
+&nbsp;<br>
+
+&nbsp;&nbsp; &nbsp;NSLog(@”NSObject’s class is %p”, [NSObject class]);<br>
+
+&nbsp;&nbsp; &nbsp;NSLog(@”NSObject’s meta class is %p”, object_getClass([NSObject class]));<br>
+
+}</p>
+
+
+
+
+<p>表面上，这都很简单。在运行时创建一个新类，只需要3步</p>
+
+
+
+
+<p>1)为 class pair分配存储空间 (使用objc_allocateClassPair)</p>
+
+
+
+
+<p>2)增加需要的方法和ivars(使用class_addMethod来添加方法)</p>
+
+
+
+
+<p>3) 注册这个类，以便它能被别人使用(objc_registerClassPair)</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>现在的问题是，什么是class pair, 函数objc_allocateClassPair只返回一个&#20540;:the class</p>
+
+
+
+
+<p>那么pair的另外一半在哪里呢？你可能已经猜到另外一般就是meta-class(也就是本文的主题）</p>
+
+
+
+
+<p><strong>一个数据结构需要哪些东西才能成为一个对象</strong></p>
+
+
+
+
+<p>每个对象都有一个类，这是一个基本的面向对象的概念。</p>
+
+
+
+
+<p>在Objective-C中，任何数据结构，如果在正确的位置有一个指向类的指针，就能被视为一个对象。</p>
+
+
+
+
+<p>在Objective-C中，一个对象的类，由它的isa指针决定。这个isa指针指向 对象的类。</p>
+
+
+
+
+<p>事实上，一个对象的基本定义是这样的:</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>typedef struct objc_object {</p>
+
+
+
+
+<p>&nbsp;&nbsp; &nbsp;Class isa;</p>
+
+
+
+
+<p>} *id;</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>这就是说，任何以一个指向Class结构的指针开始的结构，都能被当作objc_object</p>
+
+
+
+
+<p>对象最重要的特性，就是你可以给它们发送消息：</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>[@&quot;stringValue&quot;</p>
+
+
+
+
+<p>&nbsp;&nbsp; &nbsp;writeToFile:@&quot;/file.txt&quot; atomically:YES encoding:NSUTF8StringEncoding error:NULL];</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>当你发送消息给一个Objective-C对象时（比如这里的NSCFString), 运行时(runtime) 通过对象的isa指针得到对象的Class(这里是NSCFString类），而Class里含有那些可以应用这个类的所有对象上的所有方法的列表，以及指向superclass的指针。运行时通过类的方法列表和超类，来发现一个能同消息选择子匹配的方法（上面的例子中，就是在NSString类中的writeToFile:atomically:encoding:error方法）。</p>
+
+
+
+
+<p>要点就是：类定义了那些消息，你只能发送那些已经定义好的消息给它的对象</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p><strong>什么是meta-class</strong></p>
+
+
+
+
+<p>现在，你可能已经知道，在Objective-C中，一个类也是一个对象。这意味着，你也可以发送消息给一个类</p>
+
+
+
+
+<p>NSStringEncoding defaultStringEncoding = [NSString defaultStringEncoding];</p>
+
+
+
+
+<p>在这种情况下， defaultStringEncoding被发送给NSString类</p>
+
+
+
+
+<p>在Objective-C 中，每个类，都是一个对象。也就是说，类结构也必须以isa指针开始，这样，它才同objc_object结构二进制兼容</p>
+
+
+
+
+<p>在结构里的第2个项目，必须是superclass的指针（如果是基类，没有父类的话，设置为nil)</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>定义一个类，有很多不同的方式，依赖于你的运行时版本而不同，但他们都以 isa开始，然后后面接着superclass</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>typedef struct objc_class *Class;</p>
+
+
+
+
+<p>struct objc_class {</p>
+
+
+
+
+<p>&nbsp;&nbsp; &nbsp;Class isa;</p>
+
+
+
+
+<p>&nbsp;&nbsp; &nbsp;Class super_class;</p>
+
+
+
+
+<p>&nbsp;&nbsp; &nbsp;/* followed by runtime specific details… */</p>
+
+
+
+
+<p>};</p>
+
+
+
+
+<p>为了让我们调用类的一个方法，类的isa指针必须指向一个类结构，并且，类结构必须含有我们能在该类上调用的方法列表</p>
+
+
+
+
+<p>这就导致了一个meta-class的定义:meta-class是一个类对象的类</p>
+
+
+
+
+<p>简单地说，</p>
+
+
+
+
+<p>当你发送一条消息给一个对象时，这条消息会在对象的类的方法列表里查找</p>
+
+
+
+
+<p>当你发送一条消息给一个类时，就会在类的meta-class的方法列表理查找消息</p>
+
+
+
+
+<p>meta-class是必不可少的，因为它存储了一个类的类 方法。每个类都必须只有唯一的meta-class,因为每个类都只可能有一个唯一的类方法列表。</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p><strong>meta-class的类又是什么呢？</strong></p>
+
+
+
+
+<p>meta-class，跟 类一样，它也是一个对象。这意味着，你也可以在它上面调用方法。自然地，这意味这，它也必须有一个类。</p>
+
+
+
+
+<p>所有的meta-class都使用基类的meta-class(在它们的继承体系中，最顶层的类的meta-class)作为它们自己的类。这意味着，所有从NSObject继承来的类，它们的meta-class都将NSObject的meta-class作为自己的类</p>
+
+
+
+
+<p>遵循这个规则，所有的meta-class使用基类的meta-class作为它们自己的类，任何base meta-class都将是它自己的类（它们的isa指针指向它们自己）。也就是说，在 NSObject的meta-class的isa指针将指向它自己（它是自己的一个实例）</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>类和 meta-class的继承</p>
+
+
+
+
+<p>同样的方式，类用super_class 指针指向超类，meta-class使用它自己的super_class指向 类的super-class的meta-class</p>
+
+
+
+
+<p>巧合地是，基类的meta-class设置它的 super_class 为基类自己。</p>
+
+
+
+
+<p><a href="http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html">http://www.sealiesoftware.com/blog/archive/2009/04/14/objc_explain_Classes_and_metaclasses.html</a></p>
+
+
+
+
+<p>http://www.sealiesoftware.com/blog/class%20diagram.pdf</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>用实验来验证我们的想法</p>
+
+
+
+
+<p>为了确认这些情况，我们看看ReportFunctional的输出。 这个函数的目的是 追踪isa指针，并记录在哪里找到的它。</p>
+
+
+
+
+<p>为了运行ReportFunction，我们需要建立这个动态创建的类的实例，然后调用它的report方法</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>id instanceOfNewClass =</p>
+
+
+
+
+<p>&nbsp;&nbsp; &nbsp;[[newClass alloc] initWithDomain:@”someDomain” code:0 userInfo:nil];</p>
+
+
+
+
+<p>[instanceOfNewClass performSelector:@selector(report)];</p>
+
+
+
+
+<p>[instanceOfNewClass release];</p>
+
+
+
+
+<p>因为没有report方法的声明，我使用performSelector:来调用它，所以编译不会给出什么警告</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>ReportFunction将遍历isa指针，告诉我们那些对象被当成类，meta-class，以及meta-class的类 来使用</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>取得一个对象的类：ReportFunction将使用object_getClass来追踪isa指针， 因为isa指针是类的一个被保护的成员（你不能直接访问其他类的isa指针）</p>
+
+
+
+
+<p>ReportFunction不使用类方法来实现这个，因为调用一个类对象的类方法，将不会返回meta-class. 而是再次返回这个类（所以[NSString class]将返回NSString类，而不是NSString的meta-class)</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>结论:</p>
+
+
+
+
+<p>meta-class是类对象的类。每个类都有它自己唯一的meta-class(因为每个类都有它自己唯一的方法列表）</p>
+
+
+
+
+<p>http://cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html</p>
+
+
+
+
+<p></p>
+
+
+<p><br></p>
+</body>
+</html>
