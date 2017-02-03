@@ -16,7 +16,9 @@
 		<script src="../bootstrap-3.3.7-dist/js/jquery.min.js"></script>
 		<!-- 包括所有已编译的插件 -->
 		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
 		<link rel="stylesheet" type="text/css" href="../xinyuncss/bootstrapCustom.css" />
+		<script src="../xinyunjs/calculatPrice.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
 		<!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
@@ -46,7 +48,7 @@
 				<div class="collapse navbar-collapse" id="example-navbar-collapse">
 
 					<ul class="nav navbar-nav navbar-right" id="mytab">
-						<li ><a href="../index.html">首页</a></li>
+						<li><a href="../index.html">首页</a></li>
 						<li class="active"><a href="#">产品与服务</a></li>
 						<li><a href="#">客户案例</a></li>
 						<li><a href="../about.html">关于</a></li>
@@ -105,40 +107,181 @@
 					<thead>
 						<tr>
 							<th>服务商</th>
-							<th>明目</th>
-							<th>阶梯</th>
-							<th>价格</th>
+							<th>价格链接</th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td >七牛</td>
-							<td>存储空间</td>
-							<td> 
-								<ul>
-									<li>第 0 GB 至 10 GB</li>
-									<li>第 10 GB 至 50 TB</li>
-								</ul>
-							</td>
-							<td> 
-								<ul>
-									<li>免费</li>
-									<li>0.165 元/GB/月</li>
-								</ul>
-							</td>
+							<td>七牛</td>
+							<td><a href="http://www.qiniu.com/pricing">七牛云价格方案</a></td>
 						</tr>
 						<tr>
-							<td>阿里云存储</td>
-							<td>数据存储</td>
-							<td>无</td>
-							<td>0.148 元/GB/月</td>
+							<td>腾讯云</td>
+							<td><a href="https://www.qcloud.com/document/product/430/5871">腾讯云价格方案</a></td>
 						</tr>
-						
+
+						<tr>
+							<td>百度云</td>
+							<td><a href="https://cloud.baidu.com/product/bos.html">百度云价格方案</a></td>
+						</tr>
+
+						<tr>
+							<td>阿里云</td>
+							<td><a href="https://www.aliyun.com/price/product#/oss/detail">阿里云价格方案</a></td>
+						</tr>
+
 					</tbody>
 				</table>
 			</div>
+			<div id="fspart5" class="row section">
+				<h1>计算器</h1>
+
+				<div class="col-md-4 col-lg-offset-1">
+					<div class="input-group">
+						<span class="input-group-addon">所需存储空间：</span>
+						<input v-model="StorageInput" type="text" class="form-control" placeholder="所需存储空间">
+						<span class="input-group-addon">GB</span>
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon">请求次数：</span>
+						<input v-model="TimesInput" type="text" class="form-control" placeholder="请求次数">
+						<span class="input-group-addon">万次／日</span>
+					</div>
+					<br>
+
+					<div class="input-group">
+						<span class="input-group-addon">预计流量：</span>
+						<input v-model="LiuLiangInput" type="text" class="form-control" placeholder="预计流量">
+						<span class="input-group-addon">GB／日</span>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-lg-offset-1">
+					<div class="input-group">
+						<span class="input-group-addon">七牛</span>
+						<input v-model="yunpan.qiNiuInput" type="text" class="form-control">
+						<span class="input-group-addon">%</span>
+					</div>
+
+					<br>
+
+					<div class="input-group">
+						<span class="input-group-addon">百度</span>
+						<input v-model="yunpan.baiDuInput" type="text" class="form-control">
+						<span class="input-group-addon">%</span>
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon">阿里</span>
+						<input v-model="yunpan.aliInput" type="text" class="form-control">
+						<span class="input-group-addon">%</span>
+					</div>
+
+				</div>
+
+				<p>预计总价格: {{ totalPrice }}</p>
+
+			</div>
+
 		</div>
 
+		<script>
+			new Vue({
+				el: '#fspart5',
+				data: {
+					StorageInput: '1',
+					LiuLiangInput: '2',
+					TimesInput: '0',
+					totalPrice: '0',
+					stopContinue: false,
+					yunpan: {
+						qiNiuInput: '100',
+						baiDuInput: '0',
+						aliInput: '0'
+					},
+				},
+				methods: {
+					replaceInteger: function(sourceValue) {
+						var tempvalue = sourceValue.replace(/[^\d]/g, '');
+						tempvalue = tempvalue.replace(/^0(.|\n)/, '0');
+						return tempvalue;
+					},
+					resetPresent: function(currentkey, offsetValue) {
+						var i = 0,
+							dex = 0;
+						var keys = [];
+						for (var p in this.yunpan) {
+							keys.push(p);
+							if (p == currentkey) {
+								dex = i;
+							}
+							i++;
+						}
+						var needValue = offsetValue;
+						dex += 1;
+						for (var j = 0; j < keys.length; j++) {
+							if (dex > keys.length - 1) {
+								dex = 0;
+							}
+							var newkey = keys[dex];
+							var currentValue = this.yunpan[newkey];
+							var remainValue = parseInt(currentValue, 10) + parseInt(needValue, 10);
+							if (remainValue < 0) {
+								this.stopContinue = true;
+								Vue.set(this.yunpan, newkey, 0);
+								needValue = remainValue;
+							} else {
+								this.stopContinue = true;
+								Vue.set(this.yunpan, newkey, remainValue);
+								this.calculating();
+								break;
+							}
+							dex += 1;
+						}
+					},
+					calculating: function() {
+						this.StorageInput = this.replaceInteger(this.StorageInput); //不会死循环
+						this.LiuLiangInput = this.replaceInteger(this.LiuLiangInput);
+						this.TimesInput = this.replaceInteger(this.TimesInput);
+						var totalPrice  = qiNiuPrice(this.StorageInput*this.yunpan.qiNiuInput/100.,this.TimesInput,this.LiuLiangInput)+
+											baiDuPrice(this.StorageInput*this.yunpan.baiDuInput/100.,this.TimesInput,this.LiuLiangInput)+
+											aliPrice(this.StorageInput*this.yunpan.aliInput/100.,this.TimesInput,this.LiuLiangInput);
+						this.totalPrice = totalPrice+'元／月';
+					}
+				},
+				watch: {
+					'StorageInput': 'calculating',
+					'LiuLiangInput': 'calculating',
+					'TimesInput': 'calculating',
+					'yunpan.qiNiuInput': function(val, oldVal) {
+						var offset = oldVal - val;
+						if (offset == 0 || this.stopContinue) {
+							this.stopContinue = false;
+							return;
+						}
+						this.resetPresent('qiNiuInput', offset);
+					},
+					'yunpan.baiDuInput': function(val, oldVal) {
+						var offset = oldVal - val;
+						if (offset == 0 || this.stopContinue) {
+							this.stopContinue = false;
+							return;
+						}
+						this.resetPresent('baiDuInput', offset);
+					},
+					'yunpan.aliInput': function(val, oldVal) {
+						var offset = oldVal - val;
+						if (offset == 0 || this.stopContinue) {
+							this.stopContinue = false;
+							return;
+						}
+						this.resetPresent('aliInput', offset);
+					}
+				}
+			})
+		</script>
 	</body>
 
 	<footer class="footer">
