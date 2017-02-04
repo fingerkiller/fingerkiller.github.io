@@ -195,7 +195,7 @@
 					LiuLiangInput: '2',
 					TimesInput: '0',
 					totalPrice: '0',
-					stopContinue: false,
+					resetcount: 0,//循环百分比次数，因为 watch 要等逻辑完成后才会触发
 					yunpan: {
 						qiNiuInput: '100',
 						baiDuInput: '0',
@@ -222,6 +222,7 @@
 						var needValue = offsetValue;
 						dex += 1;
 						for (var j = 0; j < keys.length; j++) {
+							this.resetcount++;
 							if (dex > keys.length - 1) {
 								dex = 0;
 							}
@@ -229,11 +230,9 @@
 							var currentValue = this.yunpan[newkey];
 							var remainValue = parseInt(currentValue, 10) + parseInt(needValue, 10);
 							if (remainValue < 0) {
-								this.stopContinue = true;
 								Vue.set(this.yunpan, newkey, 0);
 								needValue = remainValue;
 							} else {
-								this.stopContinue = true;
 								Vue.set(this.yunpan, newkey, remainValue);
 								this.calculating();
 								break;
@@ -245,37 +244,36 @@
 						this.StorageInput = this.replaceInteger(this.StorageInput); //不会死循环
 						this.LiuLiangInput = this.replaceInteger(this.LiuLiangInput);
 						this.TimesInput = this.replaceInteger(this.TimesInput);
-						var totalPrice  = qiNiuPrice(this.StorageInput*this.yunpan.qiNiuInput/100.,this.TimesInput,this.LiuLiangInput)+
-											baiDuPrice(this.StorageInput*this.yunpan.baiDuInput/100.,this.TimesInput,this.LiuLiangInput)+
-											aliPrice(this.StorageInput*this.yunpan.aliInput/100.,this.TimesInput,this.LiuLiangInput);
-						this.totalPrice = totalPrice+'元／月';
+						var totalPrice = qiNiuPrice(this.StorageInput * this.yunpan.qiNiuInput / 100., this.TimesInput, this.LiuLiangInput) +
+							baiDuPrice(this.StorageInput * this.yunpan.baiDuInput / 100., this.TimesInput, this.LiuLiangInput) +
+							aliPrice(this.StorageInput * this.yunpan.aliInput / 100., this.TimesInput, this.LiuLiangInput);
+						this.totalPrice = totalPrice + '元／月';
 					}
 				},
-				
 				watch: {
 					'StorageInput': 'calculating',
 					'LiuLiangInput': 'calculating',
 					'TimesInput': 'calculating',
 					'yunpan.qiNiuInput': function(val, oldVal) {
 						var offset = oldVal - val;
-						if (offset == 0 || this.stopContinue) {
-							this.stopContinue = false;
+						if (offset == 0 || this.resetcount>0) {
+							this.resetcount--;
 							return;
 						}
 						this.resetPresent('qiNiuInput', offset);
 					},
 					'yunpan.baiDuInput': function(val, oldVal) {
 						var offset = oldVal - val;
-						if (offset == 0 || this.stopContinue) {
-							this.stopContinue = false;
+						if (offset == 0 || this.resetcount>0) {
+							this.resetcount--;
 							return;
 						}
 						this.resetPresent('baiDuInput', offset);
 					},
 					'yunpan.aliInput': function(val, oldVal) {
 						var offset = oldVal - val;
-						if (offset == 0 || this.stopContinue) {
-							this.stopContinue = false;
+						if (offset == 0 || this.resetcount>0) {
+							this.resetcount--;
 							return;
 						}
 						this.resetPresent('aliInput', offset);
