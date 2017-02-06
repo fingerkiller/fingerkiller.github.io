@@ -160,7 +160,7 @@
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon">七牛</span>
-						<input v-model="yunpan.qiNiuInput" type="number" class="form-control">
+						<input v-model="yunpan.qiNiuInput" type="text" class="form-control">
 						<span class="input-group-addon">%</span>
 					</div>
 
@@ -168,13 +168,13 @@
 
 					<div class="input-group">
 						<span class="input-group-addon">百度</span>
-						<input v-model="yunpan.baiDuInput" type="number" class="form-control">
+						<input v-model="yunpan.baiDuInput" type="text" class="form-control">
 						<span class="input-group-addon">%</span>
 					</div>
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon">阿里</span>
-						<input v-model="yunpan.aliInput" type="number" class="form-control">
+						<input v-model="yunpan.aliInput" type="text" class="form-control">
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -261,11 +261,11 @@
 						'LiuLiangInput': 'calculating',
 						'TimesInput': 'calculating',
 						'yunpan.qiNiuInput': function(val, oldVal) {
-							var offset = oldVal - val;
-						
+							resetChart();
 							
+							var offset = oldVal - val;
 							if (offset == 0 || this.resetcount > 0) {
-								resetChart();
+								
 								this.resetcount--;
 								return;
 							}
