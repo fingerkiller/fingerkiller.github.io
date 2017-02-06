@@ -34,12 +34,7 @@
 		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
-						<span class="sr-only">切换导航</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
+				
 					<a class="navbar-brand" href="../index.html">
 						<div style="display: inline-block;">
 							<img src="../assets/logo/logo 5.png" / style="height: 30px;">
@@ -71,7 +66,7 @@
 				<h1>全球首创第三方云安行存储技术</h1>
 				<p>让你对云端数据享有完整的控制权，保护云端数据的安全与隐私，让你的云端数据不再裸跑,谁还没有点儿小秘密呢？</p>
 				<img src="../assets/home/product.png" />
-				<a href="../Manager/signin/sigin.html">立即使用</a>
+
 			</div>
 
 			<hr/>
@@ -193,8 +188,8 @@
 			var vm = new Vue({
 					el: '#fspart5',
 					data: {
-						StorageInput: '1',
-						LiuLiangInput: '2',
+						StorageInput: '0',
+						LiuLiangInput: '0',
 						TimesInput: '0',
 						totalPrice: '0',
 						resetcount: 0, //循环百分比次数，因为 watch 要等逻辑完成后才会触发
@@ -252,7 +247,7 @@
 							var totalPrice = qiNiuPrice(this.StorageInput * this.yunpan.qiNiuInput / 100., this.TimesInput, this.LiuLiangInput) +
 								baiDuPrice(this.StorageInput * this.yunpan.baiDuInput / 100., this.TimesInput, this.LiuLiangInput) +
 								aliPrice(this.StorageInput * this.yunpan.aliInput / 100., this.TimesInput, this.LiuLiangInput);
-							this.totalPrice = totalPrice + '元／月';
+							this.totalPrice = totalPrice.toFixed(2) + '元／月';
 						}
 					},
 					watch: {
@@ -264,21 +259,17 @@
 							var reg = new RegExp("^(100|[1-9]\\d|\\d)$");
 							if (!reg.test(val)) {
 								this.yunpan.qiNiuInput = oldVal;
-								if(val=="")
-								{
+								if (val == "") {
 									this.yunpan.qiNiuInput = "0";
-									offset=oldVal;
-								}else
-								{
+									offset = oldVal;
+								} else {
 									return;
 								}
-								
 							}
 							if (!reg.test(oldVal)) {
 								return;
 							}
 							resetChart();
-							
 							if (offset == 0 || this.resetcount > 0) {
 								this.resetcount--;
 								return;
@@ -290,21 +281,17 @@
 							var reg = new RegExp("^(100|[1-9]\\d|\\d)$");
 							if (!reg.test(val)) {
 								this.yunpan.baiDuInput = oldVal;
-								if(val=="")
-								{
+								if (val == "") {
 									this.yunpan.baiDuInput = "0";
-									offset=oldVal;
-								}else
-								{
+									offset = oldVal;
+								} else {
 									return;
 								}
-								
 							}
 							if (!reg.test(oldVal)) {
 								return;
 							}
 							resetChart();
-							
 							if (offset == 0 || this.resetcount > 0) {
 								this.resetcount--;
 								return;
@@ -312,26 +299,21 @@
 							this.resetPresent('baiDuInput', offset);
 						},
 						'yunpan.aliInput': function(val, oldVal) {
-							
-								var offset = oldVal - val;
+							var offset = oldVal - val;
 							var reg = new RegExp("^(100|[1-9]\\d|\\d)$");
 							if (!reg.test(val)) {
 								this.yunpan.aliInput = oldVal;
-								if(val=="")
-								{
+								if (val == "") {
 									this.yunpan.aliInput = "0";
-									offset=oldVal;
-								}else
-								{
+									offset = oldVal;
+								} else {
 									return;
 								}
-								
 							}
 							if (!reg.test(oldVal)) {
 								return;
 							}
 							resetChart();
-							
 							if (offset == 0 || this.resetcount > 0) {
 								this.resetcount--;
 								return;
@@ -346,7 +328,7 @@
 				// 指定图表的配置项和数据
 				myChart.setOption({
 					series: [{
-						name: '访问来源',
+						name: '分配比例',
 						type: 'pie',
 						radius: '40%',
 						data: [{
