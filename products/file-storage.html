@@ -19,6 +19,7 @@
 		<script src="../xinyunjs/vue.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="../xinyuncss/bootstrapCustom.css" />
 		<script src="../xinyunjs/calculatPrice.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../xinyuncss/echarts.min.js"></script>
 
 		<!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
 		<!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
@@ -137,7 +138,7 @@
 			<div id="fspart5" class="row section">
 				<h1>计算器</h1>
 
-				<div class="col-md-4 col-lg-offset-1">
+				<div class="col-md-6">
 					<div class="input-group">
 						<span class="input-group-addon">所需存储空间：</span>
 						<input v-model="StorageInput" type="text" class="form-control" placeholder="所需存储空间">
@@ -156,9 +157,7 @@
 						<input v-model="LiuLiangInput" type="text" class="form-control" placeholder="预计流量">
 						<span class="input-group-addon">GB／日</span>
 					</div>
-				</div>
-
-				<div class="col-md-3 col-lg-offset-1">
+					<br>
 					<div class="input-group">
 						<span class="input-group-addon">七牛</span>
 						<input v-model="yunpan.qiNiuInput" type="text" class="form-control">
@@ -178,109 +177,139 @@
 						<input v-model="yunpan.aliInput" type="text" class="form-control">
 						<span class="input-group-addon">%</span>
 					</div>
-
 				</div>
 
-				<p>预计总价格: {{ totalPrice }}</p>
+				<div class="col-md-6">
+
+					<div id="main" style="width: 300px;height:300px; margin: 0 auto;"></div>
+					<p style="text-align: center;">预计总价格: {{ totalPrice }}</p>
+				</div>
 
 			</div>
 
 		</div>
 
 		<script>
-			new Vue({
-				el: '#fspart5',
-				data: {
-					StorageInput: '1',
-					LiuLiangInput: '2',
-					TimesInput: '0',
-					totalPrice: '0',
-					resetcount: 0,//循环百分比次数，因为 watch 要等逻辑完成后才会触发
-					yunpan: {
-						qiNiuInput: '100',
-						baiDuInput: '0',
-						aliInput: '0'
+			var vm = new Vue({
+					el: '#fspart5',
+					data: {
+						StorageInput: '1',
+						LiuLiangInput: '2',
+						TimesInput: '0',
+						totalPrice: '0',
+						resetcount: 0, //循环百分比次数，因为 watch 要等逻辑完成后才会触发
+						yunpan: {
+							qiNiuInput: '100',
+							baiDuInput: '0',
+							aliInput: '0'
+						},
 					},
-				},
-				methods: {
-					replaceInteger: function(sourceValue) {
-						var tempvalue = sourceValue.replace(/[^\d]/g, '');
-						tempvalue = tempvalue.replace(/^0(.|\n)/, '0');
-						return tempvalue;
-					},
-					resetPresent: function(currentkey, offsetValue) {
-						var i = 0,
-							dex = 0;
-						var keys = [];
-						for (var p in this.yunpan) {
-							keys.push(p);
-							if (p == currentkey) {
-								dex = i;
-							}
-							i++;
-						}
-						var needValue = offsetValue;
-						dex += 1;
-						for (var j = 0; j < keys.length; j++) {
-							this.resetcount++;
-							if (dex > keys.length - 1) {
+					methods: {
+						replaceInteger: function(sourceValue) {
+							var tempvalue = sourceValue.replace(/[^\d]/g, '');
+							tempvalue = tempvalue.replace(/^0(.|\n)/, '0');
+							return tempvalue;
+						},
+						resetPresent: function(currentkey, offsetValue) {
+							var i = 0,
 								dex = 0;
+							var keys = [];
+							for (var p in this.yunpan) {
+								keys.push(p);
+								if (p == currentkey) {
+									dex = i;
+								}
+								i++;
 							}
-							var newkey = keys[dex];
-							var currentValue = this.yunpan[newkey];
-							var remainValue = parseInt(currentValue, 10) + parseInt(needValue, 10);
-							if (remainValue < 0) {
-								Vue.set(this.yunpan, newkey, 0);
-								needValue = remainValue;
-							} else {
-								Vue.set(this.yunpan, newkey, remainValue);
-								this.calculating();
-								break;
-							}
+							var needValue = offsetValue;
 							dex += 1;
+							for (var j = 0; j < keys.length; j++) {
+								this.resetcount++;
+								if (dex > keys.length - 1) {
+									dex = 0;
+								}
+								var newkey = keys[dex];
+								var currentValue = this.yunpan[newkey];
+								var remainValue = parseInt(currentValue, 10) + parseInt(needValue, 10);
+								if (remainValue < 0) {
+									Vue.set(this.yunpan, newkey, 0);
+									needValue = remainValue;
+								} else {
+									Vue.set(this.yunpan, newkey, remainValue);
+									this.calculating();
+									break;
+								}
+								dex += 1;
+							}
+						},
+						calculating: function() {
+							this.StorageInput = this.replaceInteger(this.StorageInput); //不会死循环
+							this.LiuLiangInput = this.replaceInteger(this.LiuLiangInput);
+							this.TimesInput = this.replaceInteger(this.TimesInput);
+							var totalPrice = qiNiuPrice(this.StorageInput * this.yunpan.qiNiuInput / 100., this.TimesInput, this.LiuLiangInput) +
+								baiDuPrice(this.StorageInput * this.yunpan.baiDuInput / 100., this.TimesInput, this.LiuLiangInput) +
+								aliPrice(this.StorageInput * this.yunpan.aliInput / 100., this.TimesInput, this.LiuLiangInput);
+							this.totalPrice = totalPrice + '元／月';
 						}
 					},
-					calculating: function() {
-						this.StorageInput = this.replaceInteger(this.StorageInput); //不会死循环
-						this.LiuLiangInput = this.replaceInteger(this.LiuLiangInput);
-						this.TimesInput = this.replaceInteger(this.TimesInput);
-						var totalPrice = qiNiuPrice(this.StorageInput * this.yunpan.qiNiuInput / 100., this.TimesInput, this.LiuLiangInput) +
-							baiDuPrice(this.StorageInput * this.yunpan.baiDuInput / 100., this.TimesInput, this.LiuLiangInput) +
-							aliPrice(this.StorageInput * this.yunpan.aliInput / 100., this.TimesInput, this.LiuLiangInput);
-						this.totalPrice = totalPrice + '元／月';
+					watch: {
+						'StorageInput': 'calculating',
+						'LiuLiangInput': 'calculating',
+						'TimesInput': 'calculating',
+						'yunpan.qiNiuInput': function(val, oldVal) {
+							var offset = oldVal - val;
+							if (offset == 0 || this.resetcount > 0) {
+								resetChart();
+								this.resetcount--;
+								return;
+							}
+							this.resetPresent('qiNiuInput', offset);
+						},
+						'yunpan.baiDuInput': function(val, oldVal) {
+							resetChart();
+							var offset = oldVal - val;
+							if (offset == 0 || this.resetcount > 0) {
+								this.resetcount--;
+								return;
+							}
+							this.resetPresent('baiDuInput', offset);
+						},
+						'yunpan.aliInput': function(val, oldVal) {
+							resetChart();
+							var offset = oldVal - val;
+							if (offset == 0 || this.resetcount > 0) {
+								this.resetcount--;
+								return;
+							}
+							this.resetPresent('aliInput', offset);
+						}
 					}
-				},
-				watch: {
-					'StorageInput': 'calculating',
-					'LiuLiangInput': 'calculating',
-					'TimesInput': 'calculating',
-					'yunpan.qiNiuInput': function(val, oldVal) {
-						var offset = oldVal - val;
-						if (offset == 0 || this.resetcount>0) {
-							this.resetcount--;
-							return;
-						}
-						this.resetPresent('qiNiuInput', offset);
-					},
-					'yunpan.baiDuInput': function(val, oldVal) {
-						var offset = oldVal - val;
-						if (offset == 0 || this.resetcount>0) {
-							this.resetcount--;
-							return;
-						}
-						this.resetPresent('baiDuInput', offset);
-					},
-					'yunpan.aliInput': function(val, oldVal) {
-						var offset = oldVal - val;
-						if (offset == 0 || this.resetcount>0) {
-							this.resetcount--;
-							return;
-						}
-						this.resetPresent('aliInput', offset);
-					}
-				}
-			})
+				})
+				// 基于准备好的dom，初始化echarts实例
+			function resetChart() {
+				var myChart = echarts.init(document.getElementById('main'));
+				// 指定图表的配置项和数据
+				myChart.setOption({
+					series: [{
+						name: '访问来源',
+						type: 'pie',
+						radius: '40%',
+						data: [{
+							value: vm.yunpan.qiNiuInput,
+							name: '七牛' + vm.yunpan.qiNiuInput + '%'
+						}, {
+							value: vm.yunpan.baiDuInput,
+							name: '百度' + vm.yunpan.baiDuInput +'%'
+						}, {
+							value: vm.yunpan.aliInput,
+							name: '阿里' + vm.yunpan.aliInput + '%'
+						}]
+					}]
+				})
+			}
+			resetChart();
 		</script>
+
 	</body>
 
 	<footer class="footer">
