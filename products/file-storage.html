@@ -208,9 +208,8 @@
 						replaceInteger: function(sourceValue) {
 							var tempvalue = sourceValue.replace(/[^\d]/g, '');
 							tempvalue = tempvalue.replace(/^0+/, '');
-							if(tempvalue=="")
-							{
-								tempvalue='0';
+							if (tempvalue == "") {
+								tempvalue = '0';
 							}
 							return tempvalue;
 						},
@@ -261,19 +260,51 @@
 						'LiuLiangInput': 'calculating',
 						'TimesInput': 'calculating',
 						'yunpan.qiNiuInput': function(val, oldVal) {
+							var offset = oldVal - val;
+							var reg = new RegExp("^(100|[1-9]\\d|\\d)$");
+							if (!reg.test(val)) {
+								this.yunpan.qiNiuInput = oldVal;
+								if(val=="")
+								{
+									this.yunpan.qiNiuInput = "0";
+									offset=oldVal;
+								}else
+								{
+									return;
+								}
+								
+							}
+							if (!reg.test(oldVal)) {
+								return;
+							}
 							resetChart();
 							
-							var offset = oldVal - val;
 							if (offset == 0 || this.resetcount > 0) {
-								
 								this.resetcount--;
 								return;
 							}
 							this.resetPresent('qiNiuInput', offset);
 						},
 						'yunpan.baiDuInput': function(val, oldVal) {
-							resetChart();
 							var offset = oldVal - val;
+							var reg = new RegExp("^(100|[1-9]\\d|\\d)$");
+							if (!reg.test(val)) {
+								this.yunpan.baiDuInput = oldVal;
+								if(val=="")
+								{
+									this.yunpan.baiDuInput = "0";
+									offset=oldVal;
+								}else
+								{
+									return;
+								}
+								
+							}
+							if (!reg.test(oldVal)) {
+								return;
+							}
+							resetChart();
+							
 							if (offset == 0 || this.resetcount > 0) {
 								this.resetcount--;
 								return;
@@ -281,8 +312,26 @@
 							this.resetPresent('baiDuInput', offset);
 						},
 						'yunpan.aliInput': function(val, oldVal) {
+							
+								var offset = oldVal - val;
+							var reg = new RegExp("^(100|[1-9]\\d|\\d)$");
+							if (!reg.test(val)) {
+								this.yunpan.aliInput = oldVal;
+								if(val=="")
+								{
+									this.yunpan.aliInput = "0";
+									offset=oldVal;
+								}else
+								{
+									return;
+								}
+								
+							}
+							if (!reg.test(oldVal)) {
+								return;
+							}
 							resetChart();
-							var offset = oldVal - val;
+							
 							if (offset == 0 || this.resetcount > 0) {
 								this.resetcount--;
 								return;
@@ -305,7 +354,7 @@
 							name: '七牛' + vm.yunpan.qiNiuInput + '%'
 						}, {
 							value: vm.yunpan.baiDuInput,
-							name: '百度' + vm.yunpan.baiDuInput +'%'
+							name: '百度' + vm.yunpan.baiDuInput + '%'
 						}, {
 							value: vm.yunpan.aliInput,
 							name: '阿里' + vm.yunpan.aliInput + '%'
