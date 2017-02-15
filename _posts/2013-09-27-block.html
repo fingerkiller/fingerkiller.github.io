@@ -1,0 +1,2083 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>---
+layout: contentpage
+title: Block
+categories: [object-c_IOS]
+date: 2013-09-27 16:03:10</title>
+
+</head>
+<body>
+<hr />
+
+<p>layout: contentpage
+title: Block
+categories: [object-c_IOS]
+date: 2013-09-27 16:03:10
+sourceType: 2---</p>
+
+<h1><a target="_blank" target="_blank" href="http://www.cnblogs.com/studentdeng/archive/2012/02/03/2336863.html">Block memory</a></h1>
+
+
+
+
+<p>block 的内存管理，应该是最头疼的地方,就用这个来自WWDC的例子来解释一下吧。</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210273622.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210271703.png" alt="image" border="0" height="289" width="522" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<p>当程序运行到这里时，stack 空间中有 shared 变量和 captured 变量。</p>
+
+
+
+
+<p>这里可以看出，__block 变量开始是处于stack上的。</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210283688.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/20120203121028407.png" alt="image" border="0" height="286" width="525" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<p>当程序运行到这里时，stack 空间中有 shared 变量，captured 变量和block1。</p>
+
+
+
+
+<p>这里可以看出，block 类型的变量开始时也是处在stack上的。</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/20120203121029755.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210301411.png" alt="image" border="0" height="290" width="532" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<p>当程序运行到这里时，stack 空间中有 shared 变量，captured 变量和block1。</p>
+
+
+
+
+<p>这里&#20540;得注意的就是当我们直接修改stack 上的captured变量时，block1中的captured变量仍然是原来的数&#20540;10。事实上，从const 我们就可以看出，block1中的captured变量是不能被修改的而且是从stack原有变量的一个const 拷贝。在block1中访问的captured变量是const拷贝的，也就是说block1中captured = 10，而不是原有的stack上的&#20540; 20。当然，在block1中，我们也不能修改captured变量。</p>
+
+
+
+
+<h1>&nbsp;</h1>
+
+
+
+
+<h1>Copy block</h1>
+
+
+
+
+<p>block在一开始是处在stack上的，这是为了考虑到效率的原因，但是，有时候是需要block的生命周期长于一开始的stack，这时，我们就通过copy block 来将block复制到heap。</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210301444.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210305621.png" alt="image" border="0" height="292" width="535" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<p>当程序执行完 block2 = [block1 copy];时，__block 类型变量shared，被复制到了heap中，很显然，shared变量需要被block和block2共享(当然还有stack也要共享)，而block2被移动到heap中，很可能生命周期会长于stack，所以，shared也被复制到了heap中。而block2中的captured 也被复制到了heap中。</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210319558.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210324674.png" alt="image" border="0" height="297" width="540" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<p>当程序执行完 block3 = [block2 copy];时, 我们看到的是，block2 和block3 其实指向的是同一片内存空间。事实上，block的数据结构中，保存了引用计数，而对于copy到heap中的block 再copy时，行为同普通对象retain一样，会使引用计数&#43;1。那么如果我们对[block retain]会如何呢？ 实际上什么都没有发生，至少在现在的runtime版本下。因为retain中，不仅有引用计数&#43;1在，而且retain的返回&#20540;，必须同返回调用对象的地址一样，而block的地址是可能变化的（stack
+
+ or heap），所以，这里retain的行为几乎是被忽略掉的。</p>
+
+
+
+
+<p>当heap中的block变量先于stack被销毁时，如调用 [block2 release]; [block3 release];，heap中的block2，block3 由于引用计数为0 而被销毁，而 __block 变量shared则还在heap中，因为stack还要使用，block1 也要使用。</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210326658.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210324740.png" alt="image" border="0" height="320" width="546" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<p>当heap中的block变量晚于stack时，显然，stack 被清除，function中也啥都没了。</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/20120203121033312.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210348460.png" alt="image" border="0" height="328" width="555" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<p>最后，当block2 和block3 都被release之后。则恢复到最初状态</p>
+
+
+
+
+<p><a target="_blank" target="_blank" href="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/20120203121034445.png"><img title="image" src="http://images.cnblogs.com/cnblogs_com/studentdeng/201202/201202031210344938.png" alt="image" border="0" height="331" width="564" style="padding-left:0px; padding-right:0px; display:inline; padding-top:0px; border-width:0px"></a></p>
+
+
+
+
+<h1>&nbsp;</h1>
+
+
+
+
+<h1>block details</h1>
+
+
+
+
+<p>当我们写出一个Block literal expression</p>
+
+
+
+
+<pre>^ { printf(&quot;hello world\n&quot;); }</pre>
+
+
+
+
+<pre>事实上，编译器为我们生成了如下结构</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> __block_literal_1 {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> reserved; 
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*invoke)(<span style="color:#0000ff">struct</span> __block_literal_1 *);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> __block_descriptor_1 *descriptor;
+</pre>
+
+
+
+
+<pre>};<span style="color:#0000ff">void</span> __block_invoke_1(<span style="color:#0000ff">struct</span> __block_literal_1 *_block) {
+</pre>
+
+
+
+
+<pre>    printf(&quot;<span style="color:#8b0000">hello world\n</span>&quot;);
+</pre>
+
+
+
+
+<pre>}<span style="color:#0000ff">static</span> <span style="color:#0000ff">struct</span> __block_descriptor_1 {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> reserved;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> Block_size;
+</pre>
+
+
+
+
+<pre>} __block_descriptor_1 = { 0, <span style="color:#0000ff">sizeof</span>(<span style="color:#0000ff">struct</span> __block_literal_1)}; 当Block literal expression 使用时 __block_literal_1 则会被初始化为：<span style="color:#0000ff">struct</span> __block_literal_1 _block_literal = {
+</pre>
+
+
+
+
+<pre>    &amp;_NSConcreteStackBlock,
+</pre>
+
+
+
+
+<pre>    (1&lt;&lt;29), &lt;uninitialized&gt;,
+</pre>
+
+
+
+
+<pre>    __block_invoke_1,
+</pre>
+
+
+
+
+<pre>    &amp;__block_descriptor_1
+</pre>
+
+
+
+
+<pre>   };</pre>
+
+
+
+
+<p>下一个例子</p>
+
+
+
+
+<pre><span style="color:#0000ff">int</span> x = 10;
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> (^vv)(<span style="color:#0000ff">void</span>) = ^{printf(&quot;<span style="color:#8b0000">x is %d\n</span>&quot;, x);};
+</pre>
+
+
+
+
+<pre>x = 11;
+</pre>
+
+
+
+
+<pre>vv();
+</pre>
+
+
+
+
+<pre>编译器会生成如下结构
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> __block_literal_2{
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> reserved;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*invoke)(<span style="color:#0000ff">struct</span> __block_literal_2 *);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> __block_descriptor_2 *descriptor;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">const</span> <span style="color:#0000ff">int</span> x;
+</pre>
+
+
+
+
+<pre>};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> __block_invoke_2(<span style="color:#0000ff">struct</span> __block_literal_2 *_block){
+</pre>
+
+
+
+
+<pre>    printf(&quot;<span style="color:#8b0000">x is %d\n</span>&quot;, _block-&gt;x);
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> <span style="color:#0000ff">struct</span> __block_descriptor_2{
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> reserved;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> block_size;
+</pre>
+
+
+
+
+<pre>}__block_descriptor_2 = {0, <span style="color:#0000ff">sizeof</span>(<span style="color:#0000ff">struct</span> __block_literal_2)};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> __block_literal_2 __block_literal_2 = {
+</pre>
+
+
+
+
+<pre>    &amp;NSConcreteStackBlock,
+</pre>
+
+
+
+
+<pre>    (1&lt;&lt;29),
+</pre>
+
+
+
+
+<pre>    __block_invoke_2,
+</pre>
+
+
+
+
+<pre>    &amp;__block_descriptor_2,
+</pre>
+
+
+
+
+<pre>    x
+</pre>
+
+
+
+
+<pre>};</pre>
+
+
+
+
+<p>block中使用的普通变量（int， char *）导入是const copy。普通对象则会retain。__block 类型变量则什么不做，只是保存一个指针，全局变量也只是保存一个简单的指针。</p>
+
+
+
+
+<p>当然，block 可能也会嵌套block，那么又会是什么样子？其实不复杂，复杂的只是增加了复制函数，和释放函数，这一点很像C&#43;&#43;的拷贝构造函数，在必要时生成。</p>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> (^existingBlock)(<span style="color:#0000ff">void</span>) = …;
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> (^vv)(<span style="color:#0000ff">void</span>) = ^{existingBlock();};
+</pre>
+
+
+
+
+<pre>vv();
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> __block_literal_3{
+</pre>
+
+
+
+
+<pre>    ...;<span style="color:#008000">//esisting block</span>
+</pre>
+
+
+
+
+<pre>};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> __block_literal_4{
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> reserved;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*invoke)(<span style="color:#0000ff">struct</span> __block_literal_4 *);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> __block_literal_3 *<span style="color:#0000ff">const</span> existingBlock;
+</pre>
+
+
+
+
+<pre>};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> __block_invoke_4(<span style="color:#0000ff">struct</span> __block_literal_3 *__block) {
+</pre>
+
+
+
+
+<pre>   __block-&gt;existingBlock-&gt;invoke(__block-&gt;existingBlock);
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> __block_copy_4(<span style="color:#0000ff">struct</span> __block_literal_4 *dst, <span style="color:#0000ff">struct</span> __block_literal_4 *src) {
+</pre>
+
+
+
+
+<pre>     <span style="color:#008000">//_Block_copy_assign(&amp;dst-&gt;existingBlock, src-&gt;existingBlock, 0);</span>
+</pre>
+
+
+
+
+<pre>     _Block_object_assign(&amp;dst-&gt;existingBlock, src-&gt;existingBlock, BLOCK_FIELD_IS_BLOCK);
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> __block_dispose_4(<span style="color:#0000ff">struct</span> __block_literal_4 *src) {
+</pre>
+
+
+
+
+<pre>     <span style="color:#008000">// was _Block_destroy</span>
+</pre>
+
+
+
+
+<pre>     _Block_object_dispose(src-&gt;existingBlock, BLOCK_FIELD_IS_BLOCK);
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">static</span> <span style="color:#0000ff">struct</span> __block_descriptor_4 {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> reserved;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> Block_size;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*copy_helper)(<span style="color:#0000ff">struct</span> __block_literal_4 *dst, <span style="color:#0000ff">struct</span> __block_literal_4 *src);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*dispose_helper)(<span style="color:#0000ff">struct</span> __block_literal_4 *);
+</pre>
+
+
+
+
+<pre>} __block_descriptor_4 = {
+</pre>
+
+
+
+
+<pre>    0,
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">sizeof</span>(<span style="color:#0000ff">struct</span> __block_literal_4),
+</pre>
+
+
+
+
+<pre>    __block_copy_4,
+</pre>
+
+
+
+
+<pre>    __block_dispose_4,
+</pre>
+
+
+
+
+<pre>};
+</pre>
+
+
+
+
+<pre>初始化
+</pre>
+
+
+
+
+<pre>  <span style="color:#0000ff">struct</span> __block_literal_4 _block_literal = {
+</pre>
+
+
+
+
+<pre>    &amp;_NSConcreteStackBlock,
+</pre>
+
+
+
+
+<pre>    (1&lt;&lt;25)|(1&lt;&lt;29), &lt;uninitialized&gt;
+</pre>
+
+
+
+
+<pre>    __block_invoke_4,
+</pre>
+
+
+
+
+<pre>    &amp; __block_descriptor_4
+</pre>
+
+
+
+
+<pre>        existingBlock,
+</pre>
+
+
+
+
+<pre>   };</pre>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<h1>__block storage variables</h1>
+
+
+
+
+<p>__block&nbsp; 变量是一种很特殊的数据类型，有自己的特有的数据结构</p>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> _block_byref_xxxx {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> _block_byref_xxxx *forwarding;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;   <span style="color:#008000">//refcount;</span>
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> size;
+</pre>
+
+
+
+
+<pre>    <span style="color:#008000">// helper functions called via Block_copy() and Block_release()</span>
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*byref_keep)(<span style="color:#0000ff">void</span>  *dst, <span style="color:#0000ff">void</span> *src); <span style="color:#008000">//需要时被生成</span>
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*byref_dispose)(<span style="color:#0000ff">void</span> *);<span style="color:#008000">//需要时被生成</span>
+</pre>
+
+
+
+
+<pre>    typeof(marked_variable) marked_variable;
+</pre>
+
+
+
+
+<pre>};</pre>
+
+
+
+
+<p>看看__block 类型变量的使用</p>
+
+
+
+
+<pre><span style="color:#0000ff">int</span> __block i = 10;
+</pre>
+
+
+
+
+<pre>i = 11;
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> _block_byref_i {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> _block_byref_i *forwarding;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;   <span style="color:#008000">//refcount;</span>
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> size;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> captured_i;
+</pre>
+
+
+
+
+<pre>} i = { NULL, &amp;i, 0, <span style="color:#0000ff">sizeof</span>(<span style="color:#0000ff">struct</span> _block_byref_i), 10 };
+</pre>
+
+
+
+
+<pre>i.forwarding-&gt;captured_i = 11;</pre>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>显然，当block中增加了__block 类型变量之后，嵌套block 的拷贝函数也会增加对__block 变量的复制。</p>
+
+
+
+
+<pre>__block <span style="color:#0000ff">void</span> (voidBlock)(<span style="color:#0000ff">void</span>) = blockA;
+</pre>
+
+
+
+
+<pre>voidBlock = blockB;
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> _block_byref_voidBlock {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> _block_byref_voidBlock *forwarding;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;   <span style="color:#008000">//refcount;</span>
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> size;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*byref_keep)(<span style="color:#0000ff">struct</span> _block_byref_voidBlock *dst, <span style="color:#0000ff">struct</span> _block_byref_voidBlock *src);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*byref_dispose)(<span style="color:#0000ff">struct</span> _block_byref_voidBlock *);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (^captured_voidBlock)(<span style="color:#0000ff">void</span>);
+</pre>
+
+
+
+
+<pre>};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> _block_byref_keep_helper(<span style="color:#0000ff">struct</span> _block_byref_voidBlock *dst, <span style="color:#0000ff">struct</span> _block_byref_voidBlock *src) {
+</pre>
+
+
+
+
+<pre>    <span style="color:#008000">//_Block_copy_assign(&amp;dst-&gt;captured_voidBlock, src-&gt;captured_voidBlock, 0);</span>
+</pre>
+
+
+
+
+<pre>    _Block_object_assign(&amp;dst-&gt;captured_voidBlock, src-&gt;captured_voidBlock, BLOCK_FIELD_IS_BLOCK | BLOCK_BYREF_CALLER);
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> _block_byref_dispose_helper(<span style="color:#0000ff">struct</span> _block_byref_voidBlock *param) {
+</pre>
+
+
+
+
+<pre>    <span style="color:#008000">//_Block_destroy(param-&gt;captured_voidBlock, 0);</span>
+</pre>
+
+
+
+
+<pre>    _Block_object_dispose(param-&gt;captured_voidBlock, BLOCK_FIELD_IS_BLOCK | BLOCK_BYREF_CALLER)}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> _block_byref_voidBlock voidBlock = {( .forwarding=&amp;voidBlock, .flags=(1&lt;&lt;25), .size=<span style="color:#0000ff">sizeof</span>(<span style="color:#0000ff">struct</span> _block_byref_voidBlock *),
+</pre>
+
+
+
+
+<pre>      .byref_keep=_block_byref_keep_helper, .byref_dispose=_block_byref_dispose_helper,
+</pre>
+
+
+
+
+<pre>      .captured_voidBlock=blockA )};
+</pre>
+
+
+
+
+<pre>voidBlock.forwarding-&gt;captured_voidBlock = blockB;</pre>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>block中，引入了__block 会是什么情况</p>
+
+
+
+
+<pre><span style="color:#0000ff">int</span> __block i = 2;
+</pre>
+
+
+
+
+<pre>functioncall(^{ i = 10; });
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> _block_byref_i {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;  <span style="color:#008000">// set to NULL</span>
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> _block_byref_voidBlock *forwarding;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;   <span style="color:#008000">//refcount;</span>
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> size;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*byref_keep)(<span style="color:#0000ff">struct</span> _block_byref_i *dst, <span style="color:#0000ff">struct</span> _block_byref_i *src);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*byref_dispose)(<span style="color:#0000ff">struct</span> _block_byref_i *);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> captured_i;
+</pre>
+
+
+
+
+<pre>};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> __block_literal_5 {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> *isa;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> flags;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">int</span> reserved; 
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*invoke)(<span style="color:#0000ff">struct</span> __block_literal_5 *);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> __block_descriptor_5 *descriptor;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">struct</span> _block_byref_i *i_holder;
+</pre>
+
+
+
+
+<pre>};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> __block_invoke_5(<span style="color:#0000ff">struct</span> __block_literal_5 *_block) {
+</pre>
+
+
+
+
+<pre>   _block-&gt;i_holder-&gt;forwarding-&gt;captured_i = 10;
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> __block_copy_5(<span style="color:#0000ff">struct</span> __block_literal_5 *dst, <span style="color:#0000ff">struct</span> __block_literal_5 *src) {
+</pre>
+
+
+
+
+<pre>     _Block_object_assign(&amp;dst-&gt;i_holder, src-&gt;i_holder, BLOCK_FIELD_IS_BYREF | BLOCK_BYREF_CALLER);
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">void</span> __block_dispose_5(<span style="color:#0000ff">struct</span> __block_literal_5 *src) {
+</pre>
+
+
+
+
+<pre>     _Block_object_dispose(src-&gt;i_holder, BLOCK_FIELD_IS_BYREF | BLOCK_BYREF_CALLER);
+</pre>
+
+
+
+
+<pre>}
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">static</span> <span style="color:#0000ff">struct</span> __block_descriptor_5 {
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> reserved;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">unsigned</span> <span style="color:#0000ff">long</span> <span style="color:#0000ff">int</span> Block_size;
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*copy_helper)(<span style="color:#0000ff">struct</span> __block_literal_5 *dst, <span style="color:#0000ff">struct</span> __block_literal_5 *src);
+</pre>
+
+
+
+
+<pre>    <span style="color:#0000ff">void</span> (*dispose_helper)(<span style="color:#0000ff">struct</span> __block_literal_5 *);
+</pre>
+
+
+
+
+<pre>} __block_descriptor_5 = { 0, <span style="color:#0000ff">sizeof</span>(<span style="color:#0000ff">struct</span> __block_literal_5) __block_copy_5, __block_dispose_5 };
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> _block_byref_i i = {( .forwarding=&amp;i, .flags=0, .size=<span style="color:#0000ff">sizeof</span>(<span style="color:#0000ff">struct</span> _block_byref_i) )};
+</pre>
+
+
+
+
+<pre><span style="color:#0000ff">struct</span> __block_literal_5 _block_literal = {
+</pre>
+
+
+
+
+<pre>    &amp;_NSConcreteStackBlock,
+</pre>
+
+
+
+
+<pre>    (1&lt;&lt;25)|(1&lt;&lt;29), &lt;uninitialized&gt;,
+</pre>
+
+
+
+
+<pre>    __block_invoke_5,
+</pre>
+
+
+
+
+<pre>    &amp;__block_descriptor_5,
+</pre>
+
+
+
+
+<pre>        2,
+</pre>
+
+
+
+
+<pre>   };</pre>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>block 中的太多细节这里不做赘述，有兴趣的可以参考Block—ABI-Apple，也可以直接<a target="_blank" target="_blank" href="http://llvm.org/svn/llvm-project/compiler-rt/trunk/BlocksRuntime/runtime.c">这里</a>去看。</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+
+<p><span style="font-size:24px">例子1</span><br>
+
+</p>
+
+
+
+
+<div>
+
+<div id="highlighter_902270" class="syntaxhighlighter  objc">
+
+<div class="toolbar"><span><a target="_blank" target="_blank" href="http://www.cocoachina.com/bbs/#" class="toolbar_item command_help help">?</a></span></div>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+<tbody>
+
+<tr>
+
+<td class="gutter">
+
+<div class="line number1 index0 alt2">1</div>
+
+<div class="line number2 index1 alt1">2</div>
+
+<div class="line number3 index2 alt2">3</div>
+
+<div class="line number4 index3 alt1">4</div>
+
+<div class="line number5 index4 alt2">5</div>
+
+<div class="line number6 index5 alt1">6</div>
+
+</td>
+
+<td class="code">
+
+<div class="container">
+
+<div class="line number1 index0 alt2"><code class="objc datatypes">void</code> <code class="objc plain">
+
+exampleA() {</code></div>
+
+<div class="line number2 index1 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc datatypes">char</code><code class="objc plain">a =
+
+</code><code class="objc string">'A'</code><code class="objc plain">;</code></div>
+
+<div class="line number3 index2 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">^{</code></div>
+
+<div class="line number4 index3 alt1"><code class="objc spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="objc plain">printf(</code><code class="objc string">&quot;%c\n&quot;</code><code class="objc plain">, a);</code></div>
+
+<div class="line number5 index4 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">}();</code></div>
+
+<div class="line number6 index5 alt1"><code class="objc plain">}</code></div>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<p><br></p>
+
+<p><br></p>
+
+<p>这个例子：<br></p>
+
+<p><br></p>
+
+<p>A.始终能够正常运行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.只有在使用ARC的情况下才能正常运行<br></p>
+
+<p>C.不使用ARC才能正常运行&nbsp;&nbsp; D.永远无法正常运行<br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p><span style="font-size:24px">例子2：</span><br></p>
+
+<div>
+
+<div id="highlighter_668797" class="syntaxhighlighter  objc">
+
+<div class="toolbar"><span><a target="_blank" target="_blank" href="http://www.cocoachina.com/bbs/#" class="toolbar_item command_help help">?</a></span></div>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+<tbody>
+
+<tr>
+
+<td class="gutter">
+
+<div class="line number1 index0 alt2">1</div>
+
+<div class="line number2 index1 alt1">2</div>
+
+<div class="line number3 index2 alt2">3</div>
+
+<div class="line number4 index3 alt1">4</div>
+
+<div class="line number5 index4 alt2">5</div>
+
+<div class="line number6 index5 alt1">6</div>
+
+<div class="line number7 index6 alt2">7</div>
+
+<div class="line number8 index7 alt1">8</div>
+
+<div class="line number9 index8 alt2">9</div>
+
+<div class="line number10 index9 alt1">10</div>
+
+<div class="line number11 index10 alt2">11</div>
+
+<div class="line number12 index11 alt1">12</div>
+
+<div class="line number13 index12 alt2">13</div>
+
+</td>
+
+<td class="code">
+
+<div class="container">
+
+<div class="line number1 index0 alt2"><code class="objc datatypes">void</code> <code class="objc plain">
+
+exampleB_addBlockToArray(</code><code class="objc keyword">NSMutableArray</code> <code class="objc plain">
+
+*array) {</code></div>
+
+<div class="line number2 index1 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc datatypes">char</code><code class="objc plain">b =
+
+</code><code class="objc string">'B'</code><code class="objc plain">;</code></div>
+
+<div class="line number3 index2 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">[array addObject:^{</code></div>
+
+<div class="line number4 index3 alt1"><code class="objc spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="objc plain">printf(</code><code class="objc string">&quot;%c\n&quot;</code><code class="objc plain">, b);</code></div>
+
+<div class="line number5 index4 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">}];</code></div>
+
+<div class="line number6 index5 alt1"><code class="objc plain">}</code></div>
+
+<div class="line number7 index6 alt2"><code class="objc spaces">&nbsp;</code>&nbsp;</div>
+
+<div class="line number8 index7 alt1"><code class="objc datatypes">void</code> <code class="objc plain">
+
+exampleB() {</code></div>
+
+<div class="line number9 index8 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc keyword">NSMutableArray</code><code class="objc plain">*array = [</code><code class="objc keyword">NSMutableArray</code><code class="objc plain">array];</code></div>
+
+<div class="line number10 index9 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">exampleB_addBlockToArray(array);</code></div>
+
+<div class="line number11 index10 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc datatypes">void</code><code class="objc plain">(^block)() = [array objectAtIndex:0];</code></div>
+
+<div class="line number12 index11 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">block();</code></div>
+
+<div class="line number13 index12 alt2"><code class="objc plain">}</code></div>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<p><br></p>
+
+<p><br></p>
+
+<p>A.始终能够正常运行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.只有在使用ARC的情况下才能正常运行<br></p>
+
+<p>C.不使用ARC才能正常运行&nbsp;&nbsp; D.永远无法正常运行<br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p><span style="font-size:24px">例子3</span><br></p>
+
+<div>
+
+<div id="highlighter_908510" class="syntaxhighlighter  objc">
+
+<div class="toolbar"><span><a target="_blank" target="_blank" href="http://www.cocoachina.com/bbs/#" class="toolbar_item command_help help">?</a></span></div>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+<tbody>
+
+<tr>
+
+<td class="gutter">
+
+<div class="line number1 index0 alt2">1</div>
+
+<div class="line number2 index1 alt1">2</div>
+
+<div class="line number3 index2 alt2">3</div>
+
+<div class="line number4 index3 alt1">4</div>
+
+<div class="line number5 index4 alt2">5</div>
+
+<div class="line number6 index5 alt1">6</div>
+
+<div class="line number7 index6 alt2">7</div>
+
+<div class="line number8 index7 alt1">8</div>
+
+<div class="line number9 index8 alt2">9</div>
+
+<div class="line number10 index9 alt1">10</div>
+
+<div class="line number11 index10 alt2">11</div>
+
+<div class="line number12 index11 alt1">12</div>
+
+</td>
+
+<td class="code">
+
+<div class="container">
+
+<div class="line number1 index0 alt2"><code class="objc datatypes">void</code> <code class="objc plain">
+
+exampleC_addBlockToArray(</code><code class="objc keyword">NSMutableArray</code> <code class="objc plain">
+
+*array) {</code></div>
+
+<div class="line number2 index1 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">[array addObject:^{</code></div>
+
+<div class="line number3 index2 alt2"><code class="objc spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="objc plain">printf(</code><code class="objc string">&quot;C\n&quot;</code><code class="objc plain">);</code></div>
+
+<div class="line number4 index3 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">}];</code></div>
+
+<div class="line number5 index4 alt2"><code class="objc plain">}</code></div>
+
+<div class="line number6 index5 alt1"><code class="objc spaces">&nbsp;</code>&nbsp;</div>
+
+<div class="line number7 index6 alt2"><code class="objc datatypes">void</code> <code class="objc plain">
+
+exampleC() {</code></div>
+
+<div class="line number8 index7 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc keyword">NSMutableArray</code><code class="objc plain">*array = [</code><code class="objc keyword">NSMutableArray</code><code class="objc plain">array];</code></div>
+
+<div class="line number9 index8 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">exampleC_addBlockToArray(array);</code></div>
+
+<div class="line number10 index9 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc datatypes">void</code><code class="objc plain">(^block)() = [array objectAtIndex:0];</code></div>
+
+<div class="line number11 index10 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">block();</code></div>
+
+<div class="line number12 index11 alt1"><code class="objc plain">}</code></div>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<p><br></p>
+
+<p><br></p>
+
+<p>A.始终能够正常运行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.只有在使用ARC的情况下才能正常运行<br></p>
+
+<p>C.不使用ARC才能正常运行&nbsp;&nbsp; D.永远无法正常运行<br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p><span style="font-size:24px">例子4</span><br></p>
+
+<div>
+
+<div id="highlighter_982886" class="syntaxhighlighter  objc ">
+
+<div class="toolbar"><span><a target="_blank" target="_blank" href="http://www.cocoachina.com/bbs/#" class="toolbar_item command_help help">?</a></span></div>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+<tbody>
+
+<tr>
+
+<td class="gutter">
+
+<div class="line number1 index0 alt2">1</div>
+
+<div class="line number2 index1 alt1">2</div>
+
+<div class="line number3 index2 alt2">3</div>
+
+<div class="line number4 index3 alt1">4</div>
+
+<div class="line number5 index4 alt2">5</div>
+
+<div class="line number6 index5 alt1">6</div>
+
+<div class="line number7 index6 alt2">7</div>
+
+<div class="line number8 index7 alt1">8</div>
+
+<div class="line number9 index8 alt2">9</div>
+
+<div class="line number10 index9 alt1">10</div>
+
+<div class="line number11 index10 alt2">11</div>
+
+<div class="line number12 index11 alt1">12</div>
+
+</td>
+
+<td class="code">
+
+<div class="container">
+
+<div class="line number1 index0 alt2"><code class="objc keyword">typedef</code> <code class="objc datatypes">
+
+void</code> <code class="objc plain">(^dBlock)();</code></div>
+
+<div class="line number2 index1 alt1"><code class="objc spaces">&nbsp;</code>&nbsp;</div>
+
+<div class="line number3 index2 alt2"><code class="objc plain">dBlock exampleD_getBlock() {</code></div>
+
+<div class="line number4 index3 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc datatypes">char</code><code class="objc plain">d =
+
+</code><code class="objc string">'D'</code><code class="objc plain">;</code></div>
+
+<div class="line number5 index4 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc keyword">return</code><code class="objc plain">^{</code></div>
+
+<div class="line number6 index5 alt1"><code class="objc spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="objc plain">printf(</code><code class="objc string">&quot;%c\n&quot;</code><code class="objc plain">, d);</code></div>
+
+<div class="line number7 index6 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">};</code></div>
+
+<div class="line number8 index7 alt1"><code class="objc plain">}</code></div>
+
+<div class="line number9 index8 alt2"><code class="objc spaces">&nbsp;</code>&nbsp;</div>
+
+<div class="line number10 index9 alt1"><code class="objc datatypes">void</code> <code class="objc plain">
+
+exampleD() {</code></div>
+
+<div class="line number11 index10 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">exampleD_getBlock()();</code></div>
+
+<div class="line number12 index11 alt1"><code class="objc plain">}</code></div>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<p><br></p>
+
+<p><br></p>
+
+<p>A.始终能够正常运行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.只有在使用ARC的情况下才能正常运行<br></p>
+
+<p>C.不使用ARC才能正常运行&nbsp;&nbsp; D.永远无法正常运行<br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p><span style="font-size:24px">例子5</span><br></p>
+
+<div>
+
+<div id="highlighter_224115" class="syntaxhighlighter  objc">
+
+<div class="toolbar"><span><a target="_blank" target="_blank" href="http://www.cocoachina.com/bbs/#" class="toolbar_item command_help help">?</a></span></div>
+
+<table border="0" cellpadding="0" cellspacing="0">
+
+<tbody>
+
+<tr>
+
+<td class="gutter">
+
+<div class="line number1 index0 alt2">1</div>
+
+<div class="line number2 index1 alt1">2</div>
+
+<div class="line number3 index2 alt2">3</div>
+
+<div class="line number4 index3 alt1">4</div>
+
+<div class="line number5 index4 alt2">5</div>
+
+<div class="line number6 index5 alt1">6</div>
+
+<div class="line number7 index6 alt2">7</div>
+
+<div class="line number8 index7 alt1">8</div>
+
+<div class="line number9 index8 alt2">9</div>
+
+<div class="line number10 index9 alt1">10</div>
+
+<div class="line number11 index10 alt2">11</div>
+
+<div class="line number12 index11 alt1">12</div>
+
+<div class="line number13 index12 alt2">13</div>
+
+<div class="line number14 index13 alt1">14</div>
+
+</td>
+
+<td class="code">
+
+<div class="container">
+
+<div class="line number1 index0 alt2"><code class="objc keyword">typedef</code> <code class="objc datatypes">
+
+void</code> <code class="objc plain">(^eBlock)();</code></div>
+
+<div class="line number2 index1 alt1"><code class="objc spaces">&nbsp;</code>&nbsp;</div>
+
+<div class="line number3 index2 alt2"><code class="objc plain">eBlock exampleE_getBlock() {</code></div>
+
+<div class="line number4 index3 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc datatypes">char</code><code class="objc plain">e =
+
+</code><code class="objc string">'E'</code><code class="objc plain">;</code></div>
+
+<div class="line number5 index4 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc datatypes">void</code><code class="objc plain">(^block)() = ^{</code></div>
+
+<div class="line number6 index5 alt1"><code class="objc spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="objc plain">printf(</code><code class="objc string">&quot;%c\n&quot;</code><code class="objc plain">, e);</code></div>
+
+<div class="line number7 index6 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">};</code></div>
+
+<div class="line number8 index7 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc keyword">return</code><code class="objc plain">&lt;u&gt;&lt;font color=</code><code class="objc string">&quot;\&quot;red\&quot;&quot;</code><code class="objc plain">&gt;block&lt;/font&gt;&lt;/u&gt;;</code></div>
+
+<div class="line number9 index8 alt2"><code class="objc plain">}</code></div>
+
+<div class="line number10 index9 alt1"><code class="objc spaces">&nbsp;</code>&nbsp;</div>
+
+<div class="line number11 index10 alt2"><code class="objc datatypes">void</code> <code class="objc plain">
+
+exampleE() {</code></div>
+
+<div class="line number12 index11 alt1"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">eBlock &lt;u&gt;&lt;font color=</code><code class="objc string">&quot;\&quot;red\&quot;&quot;</code><code class="objc plain">&gt;block&lt;/font&gt;&lt;/u&gt; = exampleE_getBlock();</code></div>
+
+<div class="line number13 index12 alt2"><code class="objc spaces">&nbsp;&nbsp;</code><code class="objc plain">block();</code></div>
+
+<div class="line number14 index13 alt1"><code class="objc plain">}</code></div>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<p><br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p>A.始终能够正常运行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.只有在使用ARC的情况下才能正常运行<br></p>
+
+<p>C.不使用ARC才能正常运行&nbsp;&nbsp; D.永远无法正常运行<br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<p><strong><span style="font-size:24px">答案会在回复之后出现~</span></strong><br></p>
+
+<p><br></p>
+
+<p><br></p>
+
+<h6 class="quote" style="padding:0; margin:0"><span class="s3 f12 fn">本部分设定了隐藏,您已回复过了,以下是隐藏的内容</span></h6>
+
+
+
+
+<blockquote class="blockquote" style="margin:10px 0"><br>
+
+<br>
+
+<br>
+
+<strong><span style="font-size:24px">答案</span></strong><br>
+
+<span style="font-size:24px">例子1</span><br>
+
+<br>
+
+<strong>A正确</strong>。这个例子可以正常运行。储存exampleA的栈只有在<u><span style="color:red">block</span></u>停止执行之后才会释放，因此，无论此<u><span style="color:red">Block</span></u>由系统分配到栈中还是我们自己手动分配到堆中，它都可以正常执行。<br>
+
+<br>
+
+<br>
+
+<span style="font-size:24px">例子2</span><br>
+
+<br>
+
+<strong>B正确</strong>。如果不使用ARC，这个<u><span style="color:red">block</span></u>是一个NSStackBlock，分配给exampleB_addBlockToArray的栈上。而当它在exampleB中执行的时候，由于栈被清空，<u><span style="color:red">block</span></u>不再有效。<br>
+
+<br>
+
+而使用ARC的话，<u><span style="color:red">block</span></u>会分配到堆中，作为一个自动释放的NSMallocBlock<br>
+
+<br>
+
+<br>
+
+<span style="font-size:24px">例子3</span><br>
+
+<br>
+
+<strong>A正确</strong><br>
+
+<br>
+
+由于<u><span style="color:red">block</span></u>在自己的环路中不会抓取任何变量，它不需要在在运行的时候设置state，它会作为一个NSGlobalBlock编译。它既不是栈也不是堆，而是代码片段的一部分。所以它始终都能正常运行。<br>
+
+<br>
+
+<br>
+
+<span style="font-size:24px">例子4</span><br>
+
+<br>
+
+<strong>B正确</strong>。这个例子和例子2类&#20284;。如果不使用ARC，<u><span style="color:red">block</span></u>会在exampleD_getBlock的栈上创建起来。然后当功能返回的时候会立即失效。<br>
+
+<br>
+
+然而，以这个例子来说，这个错误非常明显，所以编译器进行编译会失败，错误提示是：error: returning <u><span style="color:red">block</span></u> that lives on the local stack（错误，返回的<u><span style="color:red">block</span></u>位于本地的栈）。<br>
+
+<br>
+
+<br>
+
+<span style="font-size:24px">例子5</span><br>
+
+<br>
+
+<strong>B正确</strong>。这个例子和例子4类&#20284;，除了编译器没有认出有错误，所以代码会进行编译然后崩溃。更糟糕的是，这个例子比较特别，如果你关闭了优化，则可以正常运行。所以在测试的时候需要注意。<br>
+
+<br>
+
+而如果使用ARC的话，<u><span style="color:red">block</span></u>则会正确的位于堆上，作为一个自动释放的NSMAllocBlock。<br>
+
+<br>
+
+<br>
+
+<strong><span style="font-size:24px">结论</span></strong><br>
+
+这套小测试有什么意义呢？意义就是要一直使用ARC。使用ARC，<u><span style="color:red">block</span></u>大部分情况下都可以正常运行。<br>
+
+<br>
+
+如果不使用ARC，谨慎起见，可以<u><span style="color:red">block</span></u> =&nbsp;[[block copy] autorelease]，这样<u><span style="color:red">block</span></u>会比申明它的栈flame的有效期长。这样<u><span style="color:red">block</span></u>会被作为一个NSMAllocBlock强制复制到堆上。<br>
+
+<br>
+
+但是，当然不会这么简单，根据苹果的文档，<br>
+
+<br>
+
+<u><span style="color:red">Block</span></u>只有当你在ARC模式下传递<u><span style="color:red">block</span></u>到栈上才会工作，比如说返回的时候。你不需要再次调用<u><span style="color:red">Block</span></u> Copy了。但是当<u><span style="color:red">block</span></u>从栈上传递到&nbsp;arrayWithObjects: 和其他做了一个retain的方法是时，仍然需要使用[^{}
+
+ copy]。<br>
+
+<br>
+
+<br>
+
+但是有一个LLVM的维护者之后也说过：<br>
+
+<br>
+
+我们认为这是编译器的bug，它现在已经修复了。但是Xcode以后是否会在以后发布的新版本中解决这个问题，我也不知道。<br>
+
+<br>
+
+<br>
+
+所以，希望，苹果也把它认为是一个bug，在以后的新版本中会解决这个问题。让我们看看会怎么样吧。<br>
+
+<br>
+
+<br>
+
+<br>
+
+原文:<a target="_blank" target="_blank" href="http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/" id="url_1">http://blog.parse.com/2013/02/05/objective-c-blocks-quiz/</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</blockquote>
+
+
+<p><br></p>
+
+<p></p>
+
+
+
+
+<p><br>
+
+</p>
+
+
+
+</body>
+</html>

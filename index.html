@@ -1,391 +1,87 @@
-<!DOCTYPE html>
-<html>
+---
+layout: default
+---
 
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta charset="UTF-8">
+ <div class="container docs-container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="sidebar hidden-print" role="complementary">
+            <div id="navigation">
+              <h1>目录</h1>
+              <ul class="nav sidenav">
 
-		<link href="assets/xinyun-logo-icon.ico" type="image/x-icon" rel="shortcut icon">
-		<link href="" rel="pre">
-		<title>云安行网关_全球第三方云端数据安全与控制技术服务</title>
-		<meta content="text/html; charset=utf-8" http-equiv="content-type">
-		<meta content="全球第三方云端数据安全与控制技术服务" name="description">
-		<meta content="云安行科技，云安行，云安行，云安全，第三方，云网关，可云安行网关，软件定义存储，CLOUDANCING" name="keywords">
-		<!-- 引入 Bootstrap -->
-		<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
-		<script src="bootstrap-3.3.7-dist/js/jquery.min.js"></script>
-		<!-- 包括所有已编译的插件 -->
-		<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="xinyuncss/bootstrapCustom.css" />
-		<!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
-		<!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
-		<!--[if lt IE 9]>
-         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-      <![endif]-->
+                {% for post in site.posts  %}
+                  {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+                  {% capture this_month %}{{ post.date | date: "%B" }}{% endcapture %}
+                  {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
+                  {% capture next_month %}{{ post.previous.date | date: "%B" }}{% endcapture %}
 
-		<style type="text/css">
-			.partTitle {
-				font-weight: bold;
-				color: rgba(46, 167, 224, 0.75);
-				font-size: 35px;
-				padding-top: 2em;
-				padding-bottom: 1em;
-			}
-		</style>
+                  {% if forloop.first %}
+                    <li><a href="#year_{{this_year}}">{{this_year}}</a>
+                      <ul class="nav">
+                        <li><a href="#month_{{this_year}}_{{this_month}}">{{this_month}}</a></li>
+                  {% endif %}
 
-	</head>
+                  {% if forloop.last %}
+                        </ul>
+                      </li>
+                  {% else %}
+                    {% if this_year != next_year %}
+                        </ul>
+                      </li>
+                      <li><a href="#year_{{next_year}}">{{next_year}}</a>
+                        <ul class="nav">
+                          <li><a href="#month_{{next_year}}_{{next_month}}">{{next_month}}</a></li>
+                    {% else %}    
+                      {% if this_month != next_month %}
+                          <li><a href="#month_{{next_year}}_{{next_month}}">{{next_month}}</a></li>
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9" role="main">
+          <div class="panel docs-content">
+            <div class="wrapper">
+              <div class="home">
+                {% for post in site.posts  %}
+                  {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+                  {% capture this_month %}{{ post.date | date: "%B" }}{% endcapture %}
+                  {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
+                  {% capture next_month %}{{ post.previous.date | date: "%B" }}{% endcapture %}
 
-	<body>
+                  {% if forloop.first %}
+                    <h2 id="year_{{this_year}}">{{this_year}}</h2>
+                    <h3 id="month_{{this_year}}_{{this_month}}">{{this_month}}</h3>
+                    <ul>
+                  {% endif %}
 
-		<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
-						<span class="sr-only">切换导航</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="index.html">
-						<div style="display: inline-block;">
-							<img src="assets/logo/logo 5.png" / style="height: 30px;">
-						</div>
-					</a>
-				</div>
-				<div class="collapse navbar-collapse" id="example-navbar-collapse">
-
-					<ul class="nav navbar-nav navbar-right" id="mytab">
-						<li class="active"><a href="#">首页</a></li>
-
-						<li class="dropdown"><a href="products/file-storage.html">产品与服务</a>
-							<ul class="dropdown-menu">
-								<li><a href="products/file-storage.html#fspart1">产品简介</a></li>
-								<li><a href="products/file-storage.html#fspart5">价格计算</a></li>
-							</ul>
-						</li>
-						<li><a href="#">客户案例</a></li>
-						<li><a href="about.html">关于</a></li>
-						<li><a href="Manager/signin/sigin.html">登录／注册</a></li>
-						<li>
-							<button type="button" class="btn btn-default navbar-btn"><a href="Manager/overView.html">控制台</a></button>
-						</li>
-						<li>
-							<a></a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-
-		<div id="part1">
-			<img id="content" src="assets/home/internet.jpg" style="width: 100%;">
-		</div>
-
-		<div class="container " style="padding-bottom: 10px;">
-			<div id="part2">
-
-				<div class="row partTitle">
-					<div class="col-md-12">
-						<p style="text-align:center">
-							<span>CLOUDANCING</span>
-							<span style="font-size: 10px;vertical-align: text-top;">TM</span>
-							<span>云安行网关</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="row">
-
-					<div class="col-md-5 col-md-offset-1">
-						<div style="text-align: left; display: inline-block">
-							<img src="assets/home/img_yuan.png">
-							<span>基于专利的加密与分云数据安全保护技术</span>
-						</div>
-
-						<div style="text-align: left; ">
-							<img src="assets/home/img_yuan.png">
-							<span>用户可以像私有云一样对公有云中的数据进行完整的控制</span>
-						</div>
-						<div style="text-align: left;">
-							<img src="assets/home/img_yuan.png">
-							<span>除了用户自己，没有任何人可以阅读和获取用户的云端数据</span>
-						</div>
-						<div>
-							<img src="assets/home/img_yunwang1.png" style="width: 100%;height: 100%">
-						</div>
-
-					</div>
-					<div class="col-md-5">
-						<img src="assets/home/img_yunwang2.png" style="width: 100%; height: 100%; padding-top: 1em">
-					</div>
-				</div>
-			</div>
-
-			<div id="part3">
-
-				<div class="row partTitle">
-					<div class="col-md-12">
-						<p style="text-align:center">
-							<span>CLOUDANCING</span>
-							<span style="font-size: 10px;vertical-align: text-top;">TM</span>
-							<span>比加密更安全</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-5 col-md-offset-1">
-
-						<div>
-							<div style="display: inline-block;width: 45%">
-								<div>
-									<span>藏宝图</span>
-								</div>
-								<div>
-									<img src="assets/home/img_cang.png" style="width: 100%;height: 100%">
-								</div>
-
-							</div>
-							<div style="display: inline-block; width: 45%">
-								<div><span>数据加密</span></div>
-								<div><img src="assets/home/img_encryption.png" style="width: 100%;height: 100%"></div>
-							</div>
-						</div>
-
-						<div>
-							<div style="display: inline-block;  width: 45%">
-								<div><img src="assets/home/img_fen.png" style="padding-left: 15px; width: 100%; height: 100%"></div>
-								<div><span>数据分割</span></div>
-							</div>
-							<div style="display: inline-block; width: 45%">
-								<div><img src="assets/home/img_difyun.png" style="width: 100%;height: 100%"></div>
-								<div><span>分云存储</span></div>
-							</div>
-
-						</div>
-
-					</div>
-					<div class="col-md-5">
-						<div style="text-align: left; padding-top: 3em ">
-							<div style="width: 3%;display: inline-block;vertical-align: top;">
-								<img src="assets/home/img_yuan.png">
-							</div>
-							<div style="width: 90%;display: inline-block">
-								<span>还记得《碟中碟1》中特工名单是如何保护的吗？</span>
-
-							</div>
-						</div>
-						<div style="text-align: left; ">
-							<div style="width: 3%;display: inline-block;vertical-align: top;">
-								<img src="assets/home/img_yuan.png">
-							</div>
-							<div style="width: 90%;display: inline-block">
-								<span>
-                            云安行首创跨公有云的数据安全分云保护技术、基于云平台的非对称秘钥验证与解析以及基于动态规则的云网调度技术。
-                        </span>
-							</div>
-						</div>
-						<div style=" padding-top: 5em; padding-bottom: 2em; font-weight: bold; color: rgba(46, 167, 224, 0.75); text-align: left; ">
-							<span>云安行</span>
-						</div>
-						<div style="text-align: left; ">
-							<div>
-								<span>不存储用户的任何</span><span style="font-weight: bold; color: rgba(46, 167, 224, 0.75);">数据</span>
-							</div>
-							<div>
-								<span>不存储用户的任何</span><span style="font-weight: bold; color: rgba(46, 167, 224, 0.75);">配置</span>
-							</div>
-							<div>
-								<span>不存储用户的任何</span><span style="font-weight: bold; color: rgba(46, 167, 224, 0.75);">密钥</span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-			<div id="part4">
-				<div class="row partTitle">
-					<div class="col-md-12">
-						<p style="text-align:center">
-							<span>CLOUDANCING</span>
-							<span style="font-size: 10px;vertical-align: text-top;">TM</span>
-							<span>支持可信SaaS应用</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-5 col-md-offset-1">
-						<div style="text-align: left;padding-bottom: 10px">
-							<span>
-                        <img src="assets/home/img_yuan.png">
-                        再也不用担心SaaS服务商能看到自己的数据了！！！
-                    </span>
-						</div>
-
-						<div style="text-align: left; padding-bottom: 10px">
-							<span>
-                        <img src="assets/home/img_yuan.png">
-                        在保证数据安全的前提下享受SaaS的便利性！！！
-                    </span>
-						</div>
-						<div style="text-align: left; padding-bottom: 10px">
-							<span>
-                        <img src="assets/home/img_yuan.png">
-                        帮助用户打消数据安全的顾虑，帮助SaaS服务更多的用户！！！
-                    </span>
-						</div>
-
-					</div>
-
-					<div class="col-md-5">
-						<img src="assets/home/img_saas.png" style="width: 100%;height: 100%">
-					</div>
-				</div>
-			</div>
-
-			<div id="part5">
-				<div class="partTitle">
-					<div class="col-md-12">
-						<p style="text-align:center">
-							<span>CLOUDANCING</span>
-							<span style="font-size: 10px;vertical-align: text-top;">TM</span>
-							<span>支持混合云应用</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-5 col-md-offset-1">
-						<img src="assets/home/img_duoyun.png" style="width: 100%;width: 100%">
-					</div>
-					<div class="col-md-5">
-						<div style="text-align: left; padding-top: 3em ">
-							<div style="width: 3%; display: inline-block; vertical-align: top; padding-bottom: 10px">
-								<img src="assets/home/img_yuan.png">
-							</div>
-							<div style="width: 90%; display: inline-block; padding-bottom: 10px">
-								<span>
-                            基于专利的加密与分云数据安全保护技术
-                        </span>
-							</div>
-						</div>
-						<div style="text-align: left; ">
-							<div style="width: 3%; display: inline-block; vertical-align: top; padding-bottom: 10px">
-								<img src="assets/home/img_yuan.png">
-							</div>
-							<div style="width: 90%; display: inline-block; padding-bottom: 10px">
-								<span>
-                            用户可以像私有云一样对公有云中的数据进行完整的控制
-                        </span>
-							</div>
-						</div>
-						<div style="text-align: left; ">
-							<div style="width: 3%; display: inline-block; vertical-align: top; padding-bottom: 10px">
-								<img src="assets/home/img_yuan.png">
-							</div>
-							<div style="width: 90%; display: inline-block; padding-bottom: 10px">
-								<span>
-                            基于专利的加密与分云数据安全保护技术
-                        </span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-			<div id="part6">
-				<div class="row partTitle">
-					<div class="col-md-12">
-						<p style="text-align:center">
-							<span>CLOUDANCING</span>
-							<span style="font-size: 10px;vertical-align: text-top;">TM</span>
-							<span>支持混合云容灾备份</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-5 col-md-offset-1">
-						<div style="padding-left: 4em; padding-bottom: 10px">
-							<span>
-                        <img src="assets/home/img_yuan.png">
-                        利用公有云进行可云安行容灾备份
-                    </span>
-						</div>
-						<div style="padding-left: 4em; padding-bottom: 10px">
-							<span>
-                        <img src="assets/home/img_yuan.png">
-                        无需提前进行硬件投资，按实际使用支付费用
-                    </span>
-						</div>
-						<div style="padding-left: 4em; padding-bottom: 10px">
-							<span>
-                        <img src="assets/home/img_yuan.png">
-                        云安行容灾备份，不用担心备份导致数据泄露
-                    </span>
-						</div>
-						<div style="padding-left: 4em; padding-bottom: 10px">
-							<span>
-                        <img src="assets/home/img_yuan.png">
-                        智能调度，大幅节约容灾备份成本
-                    </span>
-						</div>
-					</div>
-					<div class="col-md-5">
-						<img src="assets/home/img_duoyunerr.png" style="width: 100%;width: 100%">
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-	</body>
-
-	<footer class="footer">
-		<div class="container" style="margin-top: 30px; width: 80%; ">
-
-			<div class="row">
-
-				<div class="col-md-4">
-					<dl>
-						<dt>关 于</dt>
-						<dd><a href="about_profile.html">公司简介</a></dd>
-						<dd><a href="about_tos.html">服务条款</a></dd>
-						<dd><a href="about_join.html">加入我们</a></dd>
-						<dd><a href="about.html">关于我们</a></dd>
-					</dl>
-				</div>
-
-				<div class="col-md-4">
-					<dl>
-						<dt>售 前</dt>
-						<dd>售前 QQ：</dd>
-						<dd>电话咨询：<span class="wrap"></span></dd>
-						<dd>邮箱咨询：<span class="wrap"><a href="mailto:aa@aa.com">aa@aa.com</a></span></dd>
-
-					</dl>
-				</div>
-
-				<div class="col-md-4">
-					<dl class="aftersale"><dt>售 后</dt>
-						<dd>售后：<a href="" target="_blank">点击在线咨询</a></dd>
-						<dd>电话咨询：<span class="wrap"></span></dd>
-						<dd>技术支持：<span class="wrap"><a href="aa@aa.com">aa@aa.com</a></span></dd>
-					</dl>
-				</div>
-
-			</div>
-
-		</div>
-		<div class="container" style="text-align: center;  padding-bottom: 20px;">
-			<div style="font-size: 12px;display: inline-block;vertical-align: bottom"> &copy;</div>
-			<div style="display: inline-block;  font-size: 11px;">云安行科技. All rights reserved. 京ICP备XXX</div>
-		</div>
-
-	</footer>
-
-</html>
+                  <ol class="breadcrumb">
+                   <li><span>{{ post.date | date: "%B %e, %Y" }}</span> &raquo; <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></li>
+                  </ol>
+                  {% if forloop.last %}
+                    </ul>
+                  {% else %}
+                    {% if this_year != next_year %}
+                      </ul>
+                      <h2 id="year_{{next_year}}">{{next_year}}</h2>
+                      <h3 id="month_{{next_year}}_{{next_month}}">{{next_month}}</h3>
+                      <ul>
+                    {% else %}    
+                      {% if this_month != next_month %}
+                        </ul>
+                        <h3 id="month_{{next_year}}_{{next_month}}">{{next_month}}</h3>
+                        <ul>
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
